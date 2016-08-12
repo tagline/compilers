@@ -3,6 +3,7 @@
 //--------------------------------------------//
 
 %{
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,12 +15,11 @@ extern HASH_NODE *Table[HASH_SIZE];
 int running = 1;
 int linecounter = 0;
 
-// não sei se isso vai aqui ou na main ???!!!!
 int getLineNumber(void);
 int isRunning(void);
 
-
 %}
+
 
 %x COMMENT
 
@@ -39,7 +39,8 @@ int isRunning(void);
 "print"				{ printf("PRINT\n\n"); 	return KW_PRINT; 	}
 "return"			{ printf("RETURN\n\n"); return KW_RETURN; 	}
 
-[,;:\(\)\[\]\{\}+-*/<>!&$ ]     { printf("CARACTER ESPECIAL '%c'\n\n", yytext[0]); return yytext[0];}
+
+[,;:\(\)\[\]\{\}+-*\/<>!&$ ]     { printf("CARACTER ESPECIAL '%c'\n\n", yytext[0]); return yytext[0];		}
 
 
 "<="				{ printf("<=\n\n"); 	return OPERATOR_LE; 	}
@@ -50,9 +51,12 @@ int isRunning(void);
 "||"				{ printf("||\n\n"); 	return OPERATOR_OR; 	}
 
 
-
-
-
+[a-zA-Z][a-zA-Z0-9_]*		{ printf("ID\n\n"); hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER; 	}
+[0-9]+				{ printf("LIT INT\n\n"); hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER; 	}
+\'([^\\\"]|\\.)\'		{ printf("CHAR\n\n"); hashInsert(LIT_CHAR, yytext); return LIT_CHAR; 		}
+\"([^\\\"]|\\.)*\"		{ printf("STRING\n\n"); hashInsert(LIT_STRING, yytext); return LIT_STRING; 	}
+"TRUE"				{ printf("TRUE\n\n"); hashInsert(LIT_TRUE, yytext); return LIT_TRUE; 		}
+"FALSE"				{ printf("FALSE\n\n"); hashInsert(LIT_FALSE, yytext); return LIT_FALSE; 	}
 
 
 %%

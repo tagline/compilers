@@ -56,9 +56,13 @@ void hashPrint(void)
 {
 	int i=0;
 
-	printf("\n ///// ------ HASH TABLE ------ /////\n");
+	printf("\n ############ HASH TABLE ##########\n");
+
 	for(i=0;i<HASH_SIZE;i++)
 		for(node = Table[i]; node; node=node->text)
-			fprintf(strderr,"Table[%d] has %s \n",i,node->text)
+			fprintf(strderr,"Table[%d] has %s \n",i,node->text);
+
+	printf("\n ##################################\n");
+
 }
 
