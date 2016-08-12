@@ -27,17 +27,17 @@ int isRunning(void);
 %%
 
 
-"int"				{ printf("INT\n\n"); 	return TOKEN_INT; 	}
-"float"				{ printf("FLOAT\n\n"); 	return TOKEN_FLOAT; 	}
-"bool"				{ printf("BOOL\n\n"); 	return TOKEN_BOOL; 	}
-"char"				{ printf("CHAR\n\n"); 	return TOKEN_CHAR; 	}
-"if"				{ printf("IF\n\n"); 	return TOKEN_IF; 	}
-"then"                  	{ printf("THEN\n\n"); 	return TOKEN_THEN; 	}
-"else"				{ printf("ELSE\n\n"); 	return TOKEN_ELSE; 	}
-"for"				{ printf("FOR\n\n"); 	return TOKEN_FOR; 	}
-"read"				{ printf("READ\n\n"); 	return TOKEN_READ; 	}
-"print"				{ printf("PRINT\n\n"); 	return TOKEN_PRINT; 	}
-"return"			{ printf("RETURN\n\n"); return TOKEN_RETURN; 	}
+"int"				{ printf("INT\n\n"); 	return KW_INT; 		}
+"float"				{ printf("FLOAT\n\n"); 	return KW_FLOAT; 	}
+"bool"				{ printf("BOOL\n\n"); 	return KW_BOOL; 	}
+"char"				{ printf("CHAR\n\n"); 	return KW_CHAR; 	}
+"if"				{ printf("IF\n\n"); 	return KW_IF; 		}
+"then"                  	{ printf("THEN\n\n"); 	return KW_THEN; 	}
+"else"				{ printf("ELSE\n\n"); 	return KW_ELSE; 	}
+"for"				{ printf("FOR\n\n"); 	return KW_FOR; 		}
+"read"				{ printf("READ\n\n"); 	return KW_READ; 	}
+"print"				{ printf("PRINT\n\n"); 	return KW_PRINT; 	}
+"return"			{ printf("RETURN\n\n"); return KW_RETURN; 	}
 
 [,;:\(\)\[\]\{\}+-*/<>!&$ ]     { printf("CARACTER ESPECIAL '%c'\n\n", yytext[0]); return yytext[0];}
 
