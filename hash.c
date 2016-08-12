@@ -1,3 +1,7 @@
+//--------------------------------------------//
+// ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
+//--------------------------------------------//
+
 #include "hash.h"
 #include <studio.h>
 
@@ -19,7 +23,7 @@ int hashAddress(char *text)
 	return address - 1;
 }
 
-HASH_NODE = hashInsert(int type, char* text)
+HASH_NODE *hashInsert(int type, char* text)
 {
 	int address;
 	HASH_NODE=newnode;
@@ -33,11 +37,26 @@ HASH_NODE = hashInsert(int type, char* text)
 	return newnode;
 }
 
-HASH_NODE* hashFind(char *text) {}
+HASH_NODE *HashFind (char *text)
+{
+	int address = HashAddress(text);
+	HASH_NODE *node;
+
+	for (node=Table[address]; node; node=node->next)
+	{
+		if (strcmp(node->text, text))
+		{
+			return node;
+		}
+	}
+
+	return 0;
+}
 
 void hashPrint(void)
 {
 	int i=0;
+	printf("\n ///// ------ HASH TABLE ------ /////\n");
 	for(i=0;i<HASH_SIZE;i++)
 		for(node = Table[i]; node; node=node->text)
 			fprintf(strderr,"Table[%d] has %s \n",i,node->text)
