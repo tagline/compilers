@@ -3,17 +3,12 @@
 //--------------------------------------------//
 
 #include "hash.h"
-#include <studio.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-HASH_NODE = Table(HASH_SIZE);
 
-void hashInit(void)
-{
-	int i;
-
-	for (i=0; i<HASH_SIZE; i++)
-		Table[i]=0;
-}
+HASH_NODE* Table[HASH_SIZE];
 
 int hashAddress(char *text)
 { 
@@ -29,20 +24,36 @@ HASH_NODE *hashInsert(int type, char* text)
 {
 	int address;
 
-	HASH_NODE=newnode;
+	HASH_NODE *testnode;
+	HASH_NODE *newnode= malloc(sizeof(HASH_NODE));
 	address = hashAddress(text);
-	newnode = (HASH_NODE) calloc(1,sizeof(HASH_NODE));
+	
 	newnode->type = type;
 	newnode->text = (char*) calloc(strlen(text)+1,sizeof(char));
 	strcpy(newnode->text,text);
-	newnode->next = Table[address];
+	newnode->next = NULL;
+
+	if (Table[address] != NULL)
+	{
+		testnode = Table[address];
+		
+		if (testnode -> next ==NULL)
+			testnode->next = newnode;
+		else
+		{
+			while (testnode->next != NULL)
+				testnode = testnode->next;
+			testnode->next = newnode;
+		}	
+	}
 	Table[address] = newnode;
+
 	return newnode;
 }
 
 HASH_NODE *HashFind (char *text)
 {
-	int address = HashAddress(text);
+	int address = hashAddress(text);
 	HASH_NODE *node;
 
 	for (node=Table[address]; node; node=node->next)
@@ -54,15 +65,16 @@ HASH_NODE *HashFind (char *text)
 
 void hashPrint(void)
 {
+	HASH_NODE *node;
 	int i=0;
 
 	printf("\n ############ HASH TABLE ##########\n");
 
 	for(i=0;i<HASH_SIZE;i++)
-		for(node = Table[i]; node; node=node->text)
-			fprintf(strderr,"Table[%d] has %s \n",i,node->text);
+		for(node = Table[i]; node; node=node->next)
+			printf("Table[%d] has %s \n",i,node->text);
 
-	printf("\n ##################################\n");
+	printf("##################################\n");
 
 }
 

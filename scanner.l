@@ -1,66 +1,83 @@
-//--------------------------------------------//
-// ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
-//--------------------------------------------//
-
 %{
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "tokens.h"
 #include "hash.h"
+#include "y.tab.h"
+
 
 extern HASH_NODE *Table[HASH_SIZE];
 
 int running = 1;
-int linecounter = 0;
+int linecounter = 1;
 
 int getLineNumber(void);
 int isRunning(void);
 
+
+
 %}
 
+	
+%x IN_COMMENT
 
-%x COMMENT
+%%
+<<EOF>>				{ running = 0; return 0;}		
+[\t ]				{ ; }
+"//".*\n 			{ linecounter++; }
+\n				{ linecounter++; }
+
+
+<INITIAL>{
+     "/*"      BEGIN(IN_COMMENT);
+     }
+<IN_COMMENT>{
+     "*/"      BEGIN(INITIAL);
+     [^*\n]+   
+     "*"       
+     \n        linecounter++; printf("Line: %d\n", linecounter);
+     }
+
+
+
+
+"int"				{ return KW_INT; 		}
+"float"				{ return KW_FLOAT; 		}
+"bool"				{ return KW_BOOL; 		}
+"char"				{ return KW_CHAR; 		}
+"if"				{ return KW_IF; 		}
+"then"              		{ return KW_THEN; 		}
+"else"				{ return KW_ELSE; 		}
+"for"				{ return KW_FOR; 		}
+"to"				{ return KW_TO; 		}
+"read"				{ return KW_READ; 		}
+"print"				{ return KW_PRINT; 		}
+"return"			{ return KW_RETURN; 		}
+
+"<="				{ return OPERATOR_LE; 	}
+">="				{ return OPERATOR_GE; 	}
+"=="				{ return OPERATOR_EQ; 	}
+"!="				{ return OPERATOR_NE; 	}
+"&&"				{ return OPERATOR_AND; 	}
+"||"				{ return OPERATOR_OR; 	}
+
+[-,;:(){}\[\]+*/<>!&$=] 	{ return yytext[0]; }
+
+
+
+"TRUE"						{ yylval.symbol=(hashInsert(LIT_TRUE, yytext));  return LIT_TRUE;	}
+"FALSE"						{ hashInsert(LIT_FALSE, yytext); return LIT_FALSE;			}
+[a-zA-Z][a-zA-Z0-9_]*				{ hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;	 	}
+[0-9]+						{ hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER; 			}
+\'([^\\\"]|\\.)\'				{ hashInsert(LIT_CHAR, yytext); return LIT_CHAR; 			}
+\"([^\\\"]|\\.)*\"				{ hashInsert(LIT_STRING, yytext); return LIT_STRING; 			}
+
+.        					{ return TOKEN_ERROR;}
+	
 
 
 %%
-
-
-"int"				{ printf("INT\n\n"); 	return KW_INT; 		}
-"float"				{ printf("FLOAT\n\n"); 	return KW_FLOAT; 	}
-"bool"				{ printf("BOOL\n\n"); 	return KW_BOOL; 	}
-"char"				{ printf("CHAR\n\n"); 	return KW_CHAR; 	}
-"if"				{ printf("IF\n\n"); 	return KW_IF; 		}
-"then"                  	{ printf("THEN\n\n"); 	return KW_THEN; 	}
-"else"				{ printf("ELSE\n\n"); 	return KW_ELSE; 	}
-"for"				{ printf("FOR\n\n"); 	return KW_FOR; 		}
-"read"				{ printf("READ\n\n"); 	return KW_READ; 	}
-"print"				{ printf("PRINT\n\n"); 	return KW_PRINT; 	}
-"return"			{ printf("RETURN\n\n"); return KW_RETURN; 	}
-
-
-[,;:\(\)\[\]\{\}+-*\/<>!&$ ]     { printf("CARACTER ESPECIAL '%c'\n\n", yytext[0]); return yytext[0];		}
-
-
-"<="				{ printf("<=\n\n"); 	return OPERATOR_LE; 	}
-">="				{ printf(">=\n\n"); 	return OPERATOR_GE; 	}
-"=="				{ printf("==\n\n"); 	return OPERATOR_EQ; 	}
-"!="				{ printf("!=\n\n"); 	return OPERATOR_NE; 	}
-"&&"				{ printf("&&\n\n"); 	return OPERATOR_AND; 	}
-"||"				{ printf("||\n\n"); 	return OPERATOR_OR; 	}
-
-
-[a-zA-Z][a-zA-Z0-9_]*		{ printf("ID\n\n"); hashInsert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER; 	}
-[0-9]+				{ printf("LIT INT\n\n"); hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER; 	}
-\'([^\\\"]|\\.)\'		{ printf("CHAR\n\n"); hashInsert(LIT_CHAR, yytext); return LIT_CHAR; 		}
-\"([^\\\"]|\\.)*\"		{ printf("STRING\n\n"); hashInsert(LIT_STRING, yytext); return LIT_STRING; 	}
-"TRUE"				{ printf("TRUE\n\n"); hashInsert(LIT_TRUE, yytext); return LIT_TRUE; 		}
-"FALSE"				{ printf("FALSE\n\n"); hashInsert(LIT_FALSE, yytext); return LIT_FALSE; 	}
-
-
-%%
-
 
 
 int getLineNumber(void)
@@ -79,4 +96,6 @@ int yywrap(void)
 	return 1;
 }
 
+void initMe(void) {
+}
 
