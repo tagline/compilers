@@ -984,7 +984,7 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 70 "scanner.l"
-{ hashInsert(LIT_FALSE, yytext); return LIT_FALSE;			}
+{ yylval.symbol=(hashInsert(LIT_FALSE, yytext)); return LIT_FALSE;			}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
@@ -994,19 +994,19 @@ YY_RULE_SETUP
 case 31:
 YY_RULE_SETUP
 #line 72 "scanner.l"
-{ hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER; 			}
+{ yylval.symbol=(hashInsert(LIT_INTEGER, yytext)); return LIT_INTEGER; 			}
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
 #line 73 "scanner.l"
-{ hashInsert(LIT_CHAR, yytext); return LIT_CHAR; 			}
+{ yylval.symbol=(hashInsert(LIT_CHAR, yytext)); return LIT_CHAR; 			}
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
 #line 74 "scanner.l"
-{ hashInsert(LIT_STRING, yytext); return LIT_STRING; 			}
+{ yylval.symbol=(hashInsert(LIT_STRING, yytext)); return LIT_STRING; 			}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP

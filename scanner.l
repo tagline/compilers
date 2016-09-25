@@ -67,11 +67,11 @@ int isRunning(void);
 
 
 "TRUE"							{ yylval.symbol=(hashInsert(LIT_TRUE, yytext));  return LIT_TRUE;	}
-"FALSE"							{ hashInsert(LIT_FALSE, yytext); return LIT_FALSE;			}
+"FALSE"							{ yylval.symbol=(hashInsert(LIT_FALSE, yytext)); return LIT_FALSE;			}
 [a-zA-Z][a-zA-Z0-9_]*			{ yylval.symbol=(hashInsert(TK_IDENTIFIER, yytext)); return TK_IDENTIFIER;	 	}
-[0-9]+							{ hashInsert(LIT_INTEGER, yytext); return LIT_INTEGER; 			}
-\'([^\\\"]|\\.)\'				{ hashInsert(LIT_CHAR, yytext); return LIT_CHAR; 			}
-\"([^\\\"]|\\.)*\"				{ hashInsert(LIT_STRING, yytext); return LIT_STRING; 			}
+[0-9]+							{ yylval.symbol=(hashInsert(LIT_INTEGER, yytext)); return LIT_INTEGER; 			}
+\'([^\\\"]|\\.)\'				{ yylval.symbol=(hashInsert(LIT_CHAR, yytext)); return LIT_CHAR; 			}
+\"([^\\\"]|\\.)*\"				{ yylval.symbol=(hashInsert(LIT_STRING, yytext)); return LIT_STRING; 			}
 
 .        					{ return TOKEN_ERROR;}
 	
