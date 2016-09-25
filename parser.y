@@ -112,29 +112,29 @@ ARRAYNUM : ARRAYNUM literais	{ $$ = astreeCreate(ASTREE_VETOR_CONTEUDO,0,$2,$1,0
 	 | literais					{ $$ = astreeCreate(ASTREE_VETOR_CONTEUDO,0,$1,0,0,0);	}
 	 ;
 
-literais : LIT_INTEGER		{ $$ = (ASTREE_SYMBOL,$1,0,0,0,0);	}
-	 | LIT_CHAR				{ $$ = (ASTREE_SYMBOL,$1,0,0,0,0);	}
-	 | LIT_STRING 			{ $$ = (ASTREE_SYMBOL,$1,0,0,0,0);	}
-	 | LIT_TRUE				{ $$ = (ASTREE_SYMBOL,$1,0,0,0,0);	}
-	 | LIT_FALSE			{ $$ = (ASTREE_SYMBOL,$1,0,0,0,0);	}
+literais : LIT_INTEGER		{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
+	 | LIT_CHAR				{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
+	 | LIT_STRING 			{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
+	 | LIT_TRUE				{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
+	 | LIT_FALSE			{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
 	 ;
 
 declaracao_funcao : tipo TK_IDENTIFIER '(' parametros_chamada ')' bloco   
  	     	  ;
 
-parametros_chamada : tipo TK_IDENTIFIER parametros_resto	{ $$ = (ASTREE_PARAMETROS,$2,$1,$3,0,0);	} 	
+parametros_chamada : tipo TK_IDENTIFIER parametros_resto	{ $$ = astreeCreate(ASTREE_PARAMETROS,$2,$1,$3,0,0);	} 	
 		   |
 		   ;
 
-parametros_resto : ',' tipo TK_IDENTIFIER parametros_resto	{ $$ = (ASTREE_PARAMETROS,$3,$2,$4,0,0);	}
+parametros_resto : ',' tipo TK_IDENTIFIER parametros_resto	{ $$ = astreeCreate(ASTREE_PARAMETROS,$3,$2,$4,0,0);	}
 		 |
 		 ;
 
 
-tipo : KW_INT		{ $$ = (ASTREE_INT,0,0,0,0,0);	}
-     | KW_FLOAT		{ $$ = (ASTREE_FLOAT,0,0,0,0,0);	}
-     | KW_BOOL		{ $$ = (ASTREE_BOOL,0,0,0,0,0);	}
-     | KW_CHAR		{ $$ = (ASTREE_CHAR,0,0,0,0,0);	}
+tipo : KW_INT		{ $$ = astreeCreate(ASTREE_INT,0,0,0,0,0);	}
+     | KW_FLOAT		{ $$ = astreeCreate(ASTREE_FLOAT,0,0,0,0,0);}
+     | KW_BOOL		{ $$ = astreeCreate(ASTREE_BOOL,0,0,0,0,0);	}
+     | KW_CHAR		{ $$ = astreeCreate(ASTREE_CHAR,0,0,0,0,0);	}
      ;
 
 bloco : '{' lista_de_comandos '}' 				 	 //{ astreePrint($2,0); }
