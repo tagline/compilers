@@ -34,6 +34,7 @@
 %type <astree>ARRAYNUM
 %type <astree>parametros_chamada
 %type <astree>parametros_resto
+%type <astree>print
 
 
 %union {
@@ -119,7 +120,7 @@ literais : LIT_INTEGER		{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
 	 | LIT_FALSE			{ $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);	}
 	 ;
 
-declaracao_funcao : tipo TK_IDENTIFIER '(' parametros_chamada ')' bloco   
+declaracao_funcao : tipo TK_IDENTIFIER '(' parametros_chamada ')' bloco  { $$ = astreeCreate(ASTREE_FUNCAO_DECLARACAO,$2,$1,$4,$6,0);	}  
  	     	  ;
 
 parametros_chamada : tipo TK_IDENTIFIER parametros_resto	{ $$ = astreeCreate(ASTREE_PARAMETROS,$2,$1,$3,0,0);	} 	
@@ -137,7 +138,7 @@ tipo : KW_INT		{ $$ = astreeCreate(ASTREE_INT,0,0,0,0,0);	}
      | KW_CHAR		{ $$ = astreeCreate(ASTREE_CHAR,0,0,0,0,0);	}
      ;
 
-bloco : '{' lista_de_comandos '}' 				 	 //{ astreePrint($2,0); }
+bloco : '{' lista_de_comandos '}' 				 	 { $$ = astreeCreate(ASTREE_BLOCO,0,$2,0,0,0);	}
       ;
 
 // pode ter 1 comando ou uma lista
@@ -151,20 +152,20 @@ comandos : TK_IDENTIFIER '=' expressao  							{ $$ = astreeCreate(ASTREE_CMD_AT
 	 | KW_IF '(' expressao ')' KW_THEN comandos KW_ELSE comandos	{ $$ = astreeCreate(ASTREE_CMD_IF_ELSE,0,$3,$6,$8,0);	}
 	 | KW_FOR '(' expressao ')' comandos 							{ $$ = astreeCreate(ASTREE_CMD_FOR,0,$3,$5,0,0);	}
 	 | KW_FOR '(' TK_IDENTIFIER '=' expressao KW_TO expressao ')' comandos  { $$ = astreeCreate(ASTREE_CMD_FOR_TO,$3,$5,$7,$9,0); }	
-	 | KW_PRINT print  												{ $$ = 0; }	
+	 | KW_PRINT print  												{ $$ = astreeCreate(ASTREE_CMD_PRINT,0,$2,0,0,0);	}	
 	 | KW_READ TK_IDENTIFIER 										{ $$ = 0; }
 	 | KW_RETURN expressao											{ $$ = 0; }    
 	 | bloco														{ $$ = astreeCreate(ASTREE_CMD_FOR,0,$1,0,0,0);}
 	 | 																{ $$ = 0; }
 	 ;
 
-print : LIT_STRING print						 // como fazer aqui?!
-      | expressao print							 
-      | LIT_STRING							 
-      | expressao 							 
+print : LIT_STRING print		{ $$ = astreeCreate(ASTREE_CMD_PRINT,$1,$2,0,0,0);	}					 // como fazer aqui?!
+      | expressao print			{ $$ = astreeCreate(ASTREE_CMD_PRINT,0,$1,$2,0,0);	}				 
+      | LIT_STRING				{ $$ = astreeCreate(ASTREE_CMD_PRINT,$1,0,0,0,0);	}						 
+      | expressao 				{ $$ = astreeCreate(ASTREE_CMD_PRINT,0,$1,0,0,0);	}			 
       ;
 
-expressao : TK_IDENTIFIER						 { $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);		}
+expressao : TK_IDENTIFIER					 { $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);		}
 	| LIT_INTEGER							 { $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);		}
 	| LIT_TRUE							 { $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);		}
 	| LIT_FALSE							 { $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);		}
@@ -172,7 +173,7 @@ expressao : TK_IDENTIFIER						 { $$ = astreeCreate(ASTREE_SYMBOL,$1,0,0,0,0);		
 	| TK_IDENTIFIER '[' expressao ']'				 { $$ = astreeCreate(ASTREE_VETOR,$1,$3,0,0,0);		}
 	| TK_IDENTIFIER '(' argumentos ')'				 { $$ = astreeCreate(ASTREE_CHAMADA_FUNCAO,$1,0,$3,0,0);}
 	| '(' expressao ')'					         { $$ = astreeCreate(ASTREE_EXP_PARENTESES,0,$2,0,0,0); }
-	| '!' expressao							 { $$ = astreeCreate(ASTREE_NEGACAO,0,$2,0,0,0);	}
+	| '!' expressao							 	 { $$ = astreeCreate(ASTREE_NEGACAO,0,$2,0,0,0);	}
 	| expressao '+' expressao					 { $$ = astreeCreate(ASTREE_ADD,0,$1,$3,0,0);		}
 	| expressao '-' expressao					 { $$ = astreeCreate(ASTREE_SUB,0,$1,$3,0,0);		}
 	| expressao '*' expressao					 { $$ = astreeCreate(ASTREE_MUL,0,$1,$3,0,0);		}

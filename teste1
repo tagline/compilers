@@ -8,12 +8,13 @@ char c: 'x';
 
 int main()
 {
-  
+  print 1 +2;
    for (i<10)
     {
     a = incn(a,1);
     i = i + 1;
     };
+	
 
 };
 

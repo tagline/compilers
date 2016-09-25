@@ -55,6 +55,9 @@
 #define ASTREE_BOOL 63
 #define ASTREE_CHAR 64
 
+#define ASTREE_FUNCAO_DECLARACAO 65
+#define ASTREE_BLOCO 66
+
 typedef struct astree_node
 {
 	// type: comando; assinalamento; soma; identificador (apenas aponta para a tabela de símbolos)
