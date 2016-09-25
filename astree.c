@@ -65,12 +65,18 @@ void astreePrint(ASTREE *node, int level)
 			case ASTREE_OR : 				fprintf(stderr, "ASTREE_OR"); break;
 			case ASTREE_ARGUMENTOS : 		fprintf(stderr, "ASTREE_ARGUMENTOS"); break;
 			case ASTREE_RESTO_ARGUMENTOS : 	fprintf(stderr, "ASTREE_RESTO_ARGUMENTOS"); break;
-						
+			case ASTREE_LISTA_COMANDOS :	fprintf(stderr, "ASTREE_LISTA_COMANDOS"); break;
+			case ASTREE_COMANDOS :			fprintf(stderr, "ASTREE_COMANDOS"); break;
+			case ASTREE_LISTA_DECLARACOES :	fprintf(stderr, "ASTREE_LISTA_DECLARACOES"); break;
+			case ASTREE_DECLARACOES :		fprintf(stderr, "ASTREE_DECLARACOES"); break;
+			case ASTREE_VARIAVEL :		fprintf(stderr, "ASTREE_VARIAVEL"); break;
+			case ASTREE_VETOR_DECLARADO :		fprintf(stderr, "ASTREE_VETOR_DECLARADO"); break;
 			default: 						fprintf(stderr, "ASTREE_UNKNOWN"); break;
 		}
 		
 		fprintf(stderr,",");
 		
+
 		if(node->symbol)
 			fprintf(stderr, "%s \n", node->symbol->text);
 		else
@@ -79,7 +85,7 @@ void astreePrint(ASTREE *node, int level)
 	
 		// chamada recursivamente para os filhos
 		for(i=0; i<MAX_SONS; i++)
-			astreePrint(node->son[i],i+1);		
+			astreePrint(node->son[i],level+1);		
 	
 	
 	}
