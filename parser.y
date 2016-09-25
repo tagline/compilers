@@ -32,6 +32,9 @@
 %type <astree>tipo
 %type <astree>literais
 %type <astree>ARRAYNUM
+%type <astree>parametros_chamada
+%type <astree>parametros_resto
+
 
 %union {
 	struct hash_node* symbol;
@@ -119,19 +122,19 @@ literais : LIT_INTEGER		{ $$ = (ASTREE_SYMBOL,$1,0,0,0,0);	}
 declaracao_funcao : tipo TK_IDENTIFIER '(' parametros_chamada ')' bloco   
  	     	  ;
 
-parametros_chamada : tipo TK_IDENTIFIER parametros_resto	 	
+parametros_chamada : tipo TK_IDENTIFIER parametros_resto	{ $$ = (ASTREE_PARAMETROS,$2,$1,$3,0,0);	} 	
 		   |
 		   ;
 
-parametros_resto : ',' tipo TK_IDENTIFIER parametros_resto
+parametros_resto : ',' tipo TK_IDENTIFIER parametros_resto	{ $$ = (ASTREE_PARAMETROS,$3,$2,$4,0,0);	}
 		 |
 		 ;
 
 
-tipo : KW_INT
-     | KW_FLOAT
-     | KW_BOOL
-     | KW_CHAR
+tipo : KW_INT		{ $$ = (ASTREE_INT,0,0,0,0,0);	}
+     | KW_FLOAT		{ $$ = (ASTREE_FLOAT,0,0,0,0,0);	}
+     | KW_BOOL		{ $$ = (ASTREE_BOOL,0,0,0,0,0);	}
+     | KW_CHAR		{ $$ = (ASTREE_CHAR,0,0,0,0,0);	}
      ;
 
 bloco : '{' lista_de_comandos '}' 				 	 //{ astreePrint($2,0); }

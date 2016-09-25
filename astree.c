@@ -71,6 +71,10 @@ void astreePrint(ASTREE *node, int level)
 			case ASTREE_DECLARACOES :		fprintf(stderr, "ASTREE_DECLARACOES"); break;
 			case ASTREE_VARIAVEL :		fprintf(stderr, "ASTREE_VARIAVEL"); break;
 			case ASTREE_VETOR_DECLARADO :		fprintf(stderr, "ASTREE_VETOR_DECLARADO"); break;
+case ASTREE_INT :		fprintf(stderr, "ASTREE_INT"); break;
+case ASTREE_FLOAT :		fprintf(stderr, "ASTREE_FLOAT"); break;
+case ASTREE_BOOL :		fprintf(stderr, "ASTREE_BOOL"); break;
+case ASTREE_CHAR :		fprintf(stderr, "ASTREE_CHAR"); break;
 			default: 						fprintf(stderr, "ASTREE_UNKNOWN"); break;
 		}
 		

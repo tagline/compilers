@@ -48,6 +48,12 @@
 #define ASTREE_VARIAVEL 56
 #define ASTREE_VETOR_DECLARADO 58
 #define ASTREE_VETOR_CONTEUDO 59
+#define ASTREE_PARAMETROS 60
+
+#define ASTREE_INT 61
+#define ASTREE_FLOAT 62
+#define ASTREE_BOOL 63
+#define ASTREE_CHAR 64
 
 typedef struct astree_node
 {
