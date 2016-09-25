@@ -8,7 +8,8 @@
 
 #define ASTREE_UNKNOWN 0
 #define ASTREE_SYMBOL 1
-#define ASTREE_ATRIBUICAO 25
+
+#define ASTREE_PROGRAMA 2
 
 #define ASTREE_CMD_ATRIBUICAO 25
 #define ASTREE_CMD_ATRIBUICAO_VETOR 26
@@ -49,19 +50,18 @@
 #define ASTREE_VETOR_DECLARADO 58
 #define ASTREE_VETOR_CONTEUDO 59
 #define ASTREE_PARAMETROS 60
+#define ASTREE_PARAMETROS_RESTO 61
 
-#define ASTREE_INT 61
-#define ASTREE_FLOAT 62
-#define ASTREE_BOOL 63
-#define ASTREE_CHAR 64
+#define ASTREE_INT 62
+#define ASTREE_FLOAT 63
+#define ASTREE_BOOL 64
+#define ASTREE_CHAR 65
 
-#define ASTREE_FUNCAO_DECLARACAO 65
-#define ASTREE_BLOCO 66
-#define ASTREE_VAZIO 67
+#define ASTREE_DECLARACAO_FUNCAO 66
+#define ASTREE_BLOCO 67
 
 typedef struct astree_node
 {
-	// type: comando; assinalamento; soma; identificador (apenas aponta para a tabela de símbolos)
 	int type; 
 	HASH_NODE *symbol;
 	struct astree_node *son[MAX_SONS];
@@ -70,4 +70,5 @@ typedef struct astree_node
 
 ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3);
 void astreePrint(ASTREE *node, int level);
+void astreeDecompile(ASTREE *astree, int node_father);
 
