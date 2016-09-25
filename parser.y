@@ -124,11 +124,11 @@ declaracao_funcao : tipo TK_IDENTIFIER '(' parametros_chamada ')' bloco  { $$ = 
  	     	  ;
 
 parametros_chamada : tipo TK_IDENTIFIER parametros_resto	{ $$ = astreeCreate(ASTREE_PARAMETROS,$2,$1,$3,0,0);	} 	
-		   |
+		   |	{ $$ = astreeCreate(ASTREE_VAZIO,0,0,0,0,0); }
 		   ;
 
 parametros_resto : ',' tipo TK_IDENTIFIER parametros_resto	{ $$ = astreeCreate(ASTREE_PARAMETROS,$3,$2,$4,0,0);	}
-		 |
+		 |		{ $$ = astreeCreate(ASTREE_VAZIO,0,0,0,0,0); }
 		 ;
 
 
@@ -156,7 +156,7 @@ comandos : TK_IDENTIFIER '=' expressao  							{ $$ = astreeCreate(ASTREE_CMD_AT
 	 | KW_READ TK_IDENTIFIER 										{ $$ = 0; }
 	 | KW_RETURN expressao											{ $$ = 0; }    
 	 | bloco														{ $$ = astreeCreate(ASTREE_CMD_FOR,0,$1,0,0,0);}
-	 | 																{ $$ = 0; }
+	 | 																{ $$ = astreeCreate(ASTREE_VAZIO,0,0,0,0,0); }
 	 ;
 
 print : LIT_STRING print		{ $$ = astreeCreate(ASTREE_CMD_PRINT,$1,$2,0,0,0);	}					 // como fazer aqui?!

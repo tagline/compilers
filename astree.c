@@ -77,6 +77,8 @@ case ASTREE_BOOL :		fprintf(stderr, "ASTREE_BOOL"); break;
 case ASTREE_CHAR :		fprintf(stderr, "ASTREE_CHAR"); break;
 case ASTREE_FUNCAO_DECLARACAO:		fprintf(stderr, "ASTREE_FUNCAO_DECLARACAO"); break;
 case ASTREE_BLOCO :		fprintf(stderr, "ASTREE_BLOCO"); break;
+case ASTREE_PARAMETROS:	fprintf(stderr, "ASTREE_PARAMETROS"); break;
+case ASTREE_VAZIO:		fprintf(stderr, "ASTREE_VAZIO"); break;
 			default: 						fprintf(stderr, "ASTREE_UNKNOWN"); break;
 		}
 		
