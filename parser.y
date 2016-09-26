@@ -152,7 +152,7 @@ lista_de_comandos : lista_de_comandos comandos ';'			{ $$ = astreeCreate(ASTREE_
 		  ;
 	
 comandos : TK_IDENTIFIER '=' expressao  				{ $$ = astreeCreate(ASTREE_CMD_ATRIBUICAO,$1,$3,0,0,0);	}
-	 | TK_IDENTIFIER '[' expressao ']' '=' expressao		{ $$ = astreeCreate(ASTREE_CMD_FOR,$1,$3,$6,0,0);	}
+	 | TK_IDENTIFIER '[' expressao ']' '=' expressao		{ $$ = astreeCreate(ASTREE_CMD_ATRIBUICAO_VETOR,$1,$3,$6,0,0);	}
 	 | KW_IF '(' expressao ')' KW_THEN comandos 			{ $$ = astreeCreate(ASTREE_CMD_IF,0,$3,$6,0,0);	}
 	 | KW_IF '(' expressao ')' KW_THEN comandos KW_ELSE comandos	{ $$ = astreeCreate(ASTREE_CMD_IF_ELSE,0,$3,$6,$8,0);	}
 	 | KW_FOR '(' expressao ')' comandos 				{ $$ = astreeCreate(ASTREE_CMD_FOR,0,$3,$5,0,0);	}
@@ -160,8 +160,8 @@ comandos : TK_IDENTIFIER '=' expressao  				{ $$ = astreeCreate(ASTREE_CMD_ATRIB
 	 | KW_PRINT print  						{ $$ = astreeCreate(ASTREE_CMD_PRINT,0,$2,0,0,0);	}	
 	 | KW_READ TK_IDENTIFIER 					{ $$ = astreeCreate(ASTREE_CMD_READ,$2,0,0,0,0);	}
 	 | KW_RETURN expressao						{ $$ = astreeCreate(ASTREE_CMD_RETURN,0,$2,0,0,0);	} 
-	 | bloco							{ $$ = astreeCreate(ASTREE_VAZIO,0,$1,0,0,0);}
-	 | 								
+	 | bloco							{ $$ = astreeCreate(ASTREE_VAZIO,0,$1,0,0,0);		}
+	 |						                { $$ = astreeCreate(ASTREE_VAZIO,0,0,0,0,0);		}
 	 ;
 
 print : LIT_STRING print						{ $$ = astreeCreate(ASTREE_CMD_PRINT,$1,$2,0,0,0);	}

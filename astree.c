@@ -136,11 +136,9 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					break;
 
 				case ASTREE_VETOR:
-					astreeDecompile(astree->son[0],ASTREE_VETOR);
 					fprintf(fileout,"%s[",astree->symbol->text);
-					astreeDecompile(astree->son[1],ASTREE_VETOR);
+					astreeDecompile(astree->son[0],ASTREE_VETOR);
 					fprintf(fileout, "]");
-					astreeDecompile(astree->son[2],ASTREE_VETOR);
 					break;
 				
 				case ASTREE_VETOR_DECLARADO:
@@ -167,6 +165,7 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					
 				case ASTREE_PARAMETROS:				
 					astreeDecompile(astree->son[0],ASTREE_PARAMETROS); // imprime o "tipo"
+					if(astree->symbol)					
 					fprintf(fileout,"%s ", astree->symbol->text); // imprime o "nome"				
 					astreeDecompile(astree->son[1],ASTREE_PARAMETROS);
 					break;	
@@ -174,6 +173,7 @@ void astreeDecompile(ASTREE *astree, int node_father){
 				case ASTREE_PARAMETROS_RESTO:	
 					fprintf(fileout,","); 	
 					astreeDecompile(astree->son[0],ASTREE_PARAMETROS); // imprime o "tipo"		
+					if(astree->symbol)
 					fprintf(fileout,"%s ", astree->symbol->text); // imprime o "nome"				
 					astreeDecompile(astree->son[1],ASTREE_PARAMETROS_RESTO);
 					break;	
@@ -223,17 +223,20 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					break;
 				
 				case ASTREE_CMD_ATRIBUICAO_VETOR:
-					astreeDecompile(astree->son[0],ASTREE_CMD_ATRIBUICAO_VETOR);
+					fprintf(fileout,"%s",astree->symbol->text);					
 					fprintf(fileout,"[");
-					astreeDecompile(astree->son[1],ASTREE_CMD_ATRIBUICAO_VETOR);
+					astreeDecompile(astree->son[0],ASTREE_CMD_ATRIBUICAO_VETOR);
 					fprintf(fileout,"] = ");
-					astreeDecompile(astree->son[2],ASTREE_CMD_ATRIBUICAO_VETOR);
+					astreeDecompile(astree->son[1],ASTREE_CMD_ATRIBUICAO_VETOR);
 					break;	
 					
 				case ASTREE_CMD_PRINT:
 					if(node_father!=ASTREE_CMD_PRINT)							
-						fprintf(fileout, "print ");		
+						fprintf(fileout, "print ");
+					if(astree->symbol)
+						fprintf(fileout, "%s ",astree->symbol->text);		
 					astreeDecompile(astree->son[0],ASTREE_CMD_PRINT);
+					
 					if(astree->son[1]!=0) {
 						fprintf(fileout, " ");	
 						astreeDecompile(astree->son[1],ASTREE_CMD_PRINT);
