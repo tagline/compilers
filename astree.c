@@ -80,7 +80,8 @@ void astreePrint(ASTREE *node, int level)
 			case ASTREE_BLOCO :				fprintf(stderr, "ASTREE_BLOCO"); break;
 			case ASTREE_PARAMETROS:			fprintf(stderr, "ASTREE_PARAMETROS"); break;
 			case ASTREE_PARAMETROS_RESTO:	fprintf(stderr, "ASTREE_PARAMETROS_RESTO"); break;			
-			case ASTREE_PROGRAMA:			fprintf(stderr, "ASTREE_PROGRAMA"); break;			
+			case ASTREE_PROGRAMA:			fprintf(stderr, "ASTREE_PROGRAMA"); break;
+			case ASTREE_VETOR_CONTEUDO:		fprintf(stderr, "ASTREE_VETOR_CONTEUDO"); break;		
 			default: 						fprintf(stderr, "ASTREE_UNKNOWN"); break;			
 		}
 		
@@ -120,12 +121,40 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					
 				case ASTREE_LISTA_DECLARACOES:
 					astreeDecompile(astree->son[0],ASTREE_LISTA_DECLARACOES);
+					astreeDecompile(astree->son[1],ASTREE_LISTA_DECLARACOES);
 					break;
 
 				case ASTREE_DECLARACOES:					
 					astreeDecompile(astree->son[0],ASTREE_DECLARACOES);
 					fprintf(fileout, ";\n");
 					break;
+	
+				case ASTREE_VARIAVEL:
+					astreeDecompile(astree->son[0],ASTREE_VARIAVEL);
+					fprintf(fileout,"%s:",astree->symbol->text);
+					astreeDecompile(astree->son[1],ASTREE_VARIAVEL);
+					break;
+
+				case ASTREE_VETOR:
+					astreeDecompile(astree->son[0],ASTREE_VETOR_DECLARADO);
+					fprintf(fileout,"%s[",astree->symbol->text);
+					astreeDecompile(astree->son[1],ASTREE_VETOR_DECLARADO);
+					fprintf(fileout, "]");
+					astreeDecompile(astree->son[2],ASTREE_VETOR_DECLARADO);
+					break;
+				
+				case ASTREE_VETOR_DECLARADO:
+					astreeDecompile(astree->son[0],ASTREE_VETOR);
+					fprintf(fileout,"%s[",astree->symbol->text);
+					astreeDecompile(astree->son[1],ASTREE_VETOR);
+					fprintf(fileout,"]: ",astree->symbol->text);
+					astreeDecompile(astree->son[2],ASTREE_VETOR);
+					break;
+	
+				case ASTREE_VETOR_CONTEUDO:
+					astreeDecompile(astree->son[0],ASTREE_VETOR_CONTEUDO);
+					astreeDecompile(astree->son[1],ASTREE_VETOR_CONTEUDO);		
+					break;			
 
 				case ASTREE_DECLARACAO_FUNCAO:				
 					astreeDecompile(astree->son[0],ASTREE_DECLARACAO_FUNCAO); // imprime o "tipo"
@@ -154,13 +183,43 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					astreeDecompile(astree->son[0], ASTREE_BLOCO);
 					fprintf(fileout,"\n}\n");
 					break;
+
+				case ASTREE_VAZIO:
+					astreeDecompile(astree->son[0], ASTREE_VAZIO);
+					break;
+
+				case ASTREE_INT:
+					fprintf(fileout,"int ");
+					break;
+
+				case ASTREE_FLOAT:
+					fprintf(fileout,"float ");
+					break;	
+
+				case ASTREE_CHAR:
+					fprintf(fileout,"char ");
+					break;
+
+				case ASTREE_BOOL:
+					fprintf(fileout,"bool ");
+					break;
+
+				case ASTREE_SYMBOL:
+					fprintf(fileout,"%s",astree->symbol->text);
+					break;
 					
 						
 				//------ Comandos ------//
+				case ASTREE_LISTA_COMANDOS:
+					astreeDecompile(astree->son[0],ASTREE_LISTA_COMANDOS);
+					astreeDecompile(astree->son[1],ASTREE_LISTA_COMANDOS);
+					fprintf(fileout,";\n");
+					break;
+
 				case ASTREE_CMD_ATRIBUICAO:
+					fprintf(fileout,"%s",astree->symbol->text);
+					fprintf(fileout,"=");
 					astreeDecompile(astree->son[0],ASTREE_CMD_ATRIBUICAO);
-					fprintf(fileout," = ");
-					astreeDecompile(astree->son[1],ASTREE_CMD_ATRIBUICAO);
 					break;
 				
 				case ASTREE_CMD_ATRIBUICAO_VETOR:
@@ -171,8 +230,9 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					astreeDecompile(astree->son[2],ASTREE_CMD_ATRIBUICAO_VETOR);
 					break;	
 					
-				case ASTREE_CMD_PRINT:					
-					fprintf(fileout, "print ");
+				case ASTREE_CMD_PRINT:
+					if(node_father!=ASTREE_CMD_PRINT)			
+						fprintf(fileout, "print ");
 					astreeDecompile(astree->son[0],ASTREE_CMD_PRINT);
 					break;
 					
@@ -184,7 +244,26 @@ void astreeDecompile(ASTREE *astree, int node_father){
 				case ASTREE_CMD_RETURN:					
 					fprintf(fileout, "return ");
 					astreeDecompile(astree->son[0],ASTREE_CMD_RETURN);
+					break;	
+
+				case ASTREE_CHAMADA_FUNCAO:
+					fprintf(fileout, "(");
+					astreeDecompile(astree->son[0],ASTREE_CHAMADA_FUNCAO);
+					fprintf(fileout, ")");
+
+					break;
+
+				case ASTREE_ARGUMENTOS:
+					astreeDecompile(astree->son[0],ASTREE_ARGUMENTOS);
+					astreeDecompile(astree->son[1],ASTREE_ARGUMENTOS);	
+					break;
+	
+				case ASTREE_RESTO_ARGUMENTOS:	
+					fprintf(fileout, ",");	
+					astreeDecompile(astree->son[0],ASTREE_RESTO_ARGUMENTOS);
+					astreeDecompile(astree->son[1],ASTREE_RESTO_ARGUMENTOS);
 					break;		
+						
 			
 				//----- Comandos  de  Controlde  de Fluxo ------//
 				case ASTREE_CMD_IF:
@@ -194,6 +273,7 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					astreeDecompile(astree->son[1],ASTREE_CMD_IF);
 					if(astree->son[2]) 
 						astreeDecompile(astree->son[2],ASTREE_CMD_IF);
+
 					break;
 				
 				case ASTREE_CMD_IF_ELSE:
@@ -203,13 +283,16 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					astreeDecompile(astree->son[1],ASTREE_CMD_IF_ELSE);
 					fprintf(fileout, " else ");
 					astreeDecompile(astree->son[2],ASTREE_CMD_IF_ELSE);
+;
 					break;
 				
 				case ASTREE_CMD_FOR:
-					fprintf(fileout, "for (");
+					if(node_father!=ASTREE_CMD_FOR)
+						fprintf(fileout, "for (");
 					astreeDecompile(astree->son[0],ASTREE_CMD_FOR);
 					fprintf(fileout, ") ");
 					astreeDecompile(astree->son[1],ASTREE_CMD_IF);
+
 					break;
 					
 				case ASTREE_CMD_FOR_TO:
@@ -221,6 +304,7 @@ void astreeDecompile(ASTREE *astree, int node_father){
 					astreeDecompile(astree->son[2],ASTREE_CMD_IF);
 					fprintf(fileout, " ) ");
 					astreeDecompile(astree->son[3],ASTREE_CMD_IF);
+
 					break;	
 					
 				//----- Expressões Aritméticas e Lógicas -----//

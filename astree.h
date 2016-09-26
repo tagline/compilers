@@ -59,6 +59,7 @@
 
 #define ASTREE_DECLARACAO_FUNCAO 66
 #define ASTREE_BLOCO 67
+#define ASTREE_VAZIO 68
 
 typedef struct astree_node
 {

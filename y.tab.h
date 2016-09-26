@@ -104,7 +104,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 40 "parser.y" /* yacc.c:1909  */
+#line 41 "parser.y" /* yacc.c:1909  */
 
 	struct hash_node* symbol;
 	struct astree_node* astree;
