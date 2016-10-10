@@ -1,0 +1,27 @@
+int a: 5;
+int b: 5;
+int x: 93923;
+int i: 0;
+int fun()
+{
+	a = 2;
+	x = 17;
+	str_aux = 0;
+	
+};
+
+int aaz: 0;
+int sdd: 0;
+
+int function2()
+{
+	a = 2;
+	x = 17;
+
+	if(1) then a = 3
+	else b = 5;
+	
+};
+
+
+

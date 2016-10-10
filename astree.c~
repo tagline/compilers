@@ -36,9 +36,8 @@ void astreePrint(ASTREE *node, int level)
 	{
 		for(i=0; i<level; i++)
 			fprintf(stderr, " ");
-		/*if(node->symbol)		//printa num linha
+		if(node->symbol)
 			fprintf(stderr, "Linha: %d\n",node->symbol->line);
-		*/
 		fprintf(stderr, "ASTREE( ");
 
 		switch(node->type)

@@ -38,6 +38,4 @@ int incn (int x, int n)
   };
 
 int voidfunc() {;};
-
-
-
+  

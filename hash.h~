@@ -10,7 +10,6 @@ typedef struct hash_node
 	int nature;
 	int data_type;
 	char *text;
-	int line;
 	struct hash_node * next;
 } HASH_NODE;
 

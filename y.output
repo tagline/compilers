@@ -22,8 +22,8 @@ Grammar
 
     7 declaracao_vars_globais: tipo TK_IDENTIFIER ':' literais
 
-    8 declaracao_vetores: tipo TK_IDENTIFIER '[' LIT_INTEGER ']'
-    9                   | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' ':' ARRAYNUM
+    8 declaracao_vetores: tipo TK_IDENTIFIER '[' literais ']'
+    9                   | tipo TK_IDENTIFIER '[' literais ']' ':' ARRAYNUM
 
    10 ARRAYNUM: ARRAYNUM literais
    11         | literais
@@ -138,7 +138,7 @@ OPERATOR_NE (273) 62
 OPERATOR_AND (274) 63
 OPERATOR_OR (275) 64
 TK_IDENTIFIER (276) 7 8 9 17 18 20 29 30 34 36 44 49 50
-LIT_INTEGER (277) 8 9 12 45
+LIT_INTEGER (277) 12 45
 LIT_TRUE (278) 15 46
 LIT_FALSE (279) 16 47
 LIT_CHAR (280) 13 48
@@ -163,7 +163,7 @@ declaracao_vetores (50)
 ARRAYNUM (51)
     on left: 10 11, on right: 9 10
 literais (52)
-    on left: 12 13 14 15 16, on right: 7 10 11
+    on left: 12 13 14 15 16, on right: 7 8 9 10 11
 declaracao_funcao (53)
     on left: 17, on right: 6
 parametros_chamada (54)
@@ -294,8 +294,8 @@ State 10
 State 11
 
     7 declaracao_vars_globais: tipo . TK_IDENTIFIER ':' literais
-    8 declaracao_vetores: tipo . TK_IDENTIFIER '[' LIT_INTEGER ']'
-    9                   | tipo . TK_IDENTIFIER '[' LIT_INTEGER ']' ':' ARRAYNUM
+    8 declaracao_vetores: tipo . TK_IDENTIFIER '[' literais ']'
+    9                   | tipo . TK_IDENTIFIER '[' literais ']' ':' ARRAYNUM
    17 declaracao_funcao: tipo . TK_IDENTIFIER '(' parametros_chamada ')' bloco
 
     TK_IDENTIFIER  shift, and go to state 17
@@ -339,8 +339,8 @@ State 16
 State 17
 
     7 declaracao_vars_globais: tipo TK_IDENTIFIER . ':' literais
-    8 declaracao_vetores: tipo TK_IDENTIFIER . '[' LIT_INTEGER ']'
-    9                   | tipo TK_IDENTIFIER . '[' LIT_INTEGER ']' ':' ARRAYNUM
+    8 declaracao_vetores: tipo TK_IDENTIFIER . '[' literais ']'
+    9                   | tipo TK_IDENTIFIER . '[' literais ']' ':' ARRAYNUM
    17 declaracao_funcao: tipo TK_IDENTIFIER . '(' parametros_chamada ')' bloco
 
     ':'  shift, and go to state 18
@@ -363,10 +363,16 @@ State 18
 
 State 19
 
-    8 declaracao_vetores: tipo TK_IDENTIFIER '[' . LIT_INTEGER ']'
-    9                   | tipo TK_IDENTIFIER '[' . LIT_INTEGER ']' ':' ARRAYNUM
+    8 declaracao_vetores: tipo TK_IDENTIFIER '[' . literais ']'
+    9                   | tipo TK_IDENTIFIER '[' . literais ']' ':' ARRAYNUM
 
-    LIT_INTEGER  shift, and go to state 27
+    LIT_INTEGER  shift, and go to state 21
+    LIT_TRUE     shift, and go to state 22
+    LIT_FALSE    shift, and go to state 23
+    LIT_CHAR     shift, and go to state 24
+    LIT_STRING   shift, and go to state 25
+
+    literais  go to state 27
 
 
 State 20
@@ -428,8 +434,8 @@ State 26
 
 State 27
 
-    8 declaracao_vetores: tipo TK_IDENTIFIER '[' LIT_INTEGER . ']'
-    9                   | tipo TK_IDENTIFIER '[' LIT_INTEGER . ']' ':' ARRAYNUM
+    8 declaracao_vetores: tipo TK_IDENTIFIER '[' literais . ']'
+    9                   | tipo TK_IDENTIFIER '[' literais . ']' ':' ARRAYNUM
 
     ']'  shift, and go to state 30
 
@@ -450,8 +456,8 @@ State 29
 
 State 30
 
-    8 declaracao_vetores: tipo TK_IDENTIFIER '[' LIT_INTEGER ']' .
-    9                   | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' . ':' ARRAYNUM
+    8 declaracao_vetores: tipo TK_IDENTIFIER '[' literais ']' .
+    9                   | tipo TK_IDENTIFIER '[' literais ']' . ':' ARRAYNUM
 
     ':'  shift, and go to state 33
 
@@ -480,7 +486,7 @@ State 32
 
 State 33
 
-    9 declaracao_vetores: tipo TK_IDENTIFIER '[' LIT_INTEGER ']' ':' . ARRAYNUM
+    9 declaracao_vetores: tipo TK_IDENTIFIER '[' literais ']' ':' . ARRAYNUM
 
     LIT_INTEGER  shift, and go to state 21
     LIT_TRUE     shift, and go to state 22
@@ -539,7 +545,7 @@ State 37
 
 State 38
 
-    9 declaracao_vetores: tipo TK_IDENTIFIER '[' LIT_INTEGER ']' ':' ARRAYNUM .
+    9 declaracao_vetores: tipo TK_IDENTIFIER '[' literais ']' ':' ARRAYNUM .
    10 ARRAYNUM: ARRAYNUM . literais
 
     LIT_INTEGER  shift, and go to state 21

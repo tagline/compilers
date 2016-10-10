@@ -65,6 +65,7 @@
 typedef struct astree_node
 {
 	int type; 
+	
 	HASH_NODE *symbol;
 	struct astree_node *son[MAX_SONS];
 	
