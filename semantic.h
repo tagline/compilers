@@ -5,4 +5,4 @@
 #include "hash.h"
 #include "astree.h"
 
-void setTypes(ASTREE *node);
+int setTypes(ASTREE *node);

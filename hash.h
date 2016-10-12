@@ -2,7 +2,13 @@
 // ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
 //--------------------------------------------//
 
-# define HASH_SIZE 997
+# define HASH_SIZE 	997
+# define HASH_INT 	1 
+# define HASH_FLOAT 	2 
+# define HASH_BOOL 	3 
+# define HASH_CHAR 	4 
+# define HASH_STRING 5 
+
 
 typedef struct hash_node
 {

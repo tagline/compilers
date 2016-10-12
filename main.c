@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "lex.yy.h"
 #include "y.tab.h"
+#include "astree.h"
 
 FILE *fileout;
 
@@ -38,8 +39,12 @@ int main(int argc, char *argv[])
 	}	
 	
 	yyparse();
-		
-	//hashPrint();
+	ASTREE *root = 0;
+	hashPrint();
+	root = get_ASTREE_root();
+	setTypes(root);
+	
+	astreePrint(root, 0);
 	
 	// se der sucesso, retorna 0 como saída //
 	exit(0);

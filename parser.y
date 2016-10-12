@@ -15,6 +15,7 @@
 #define   SYMBOL_LIT_FALSE  		4	 
 #define   SYMBOL_LIT_CHAR   		5 
 #define   SYMBOL_LIT_STRING  		6 
+ASTREE *root=0;
 
 %}
 
@@ -91,8 +92,9 @@
 
 %%
 
-programa : lista_declaracoes						{ $$ = astreeCreate(ASTREE_PROGRAMA, 0, $1, 0, 0, 0); 
-									  astreePrint($$,0);
+
+programa : lista_declaracoes						{ root = astreeCreate(ASTREE_PROGRAMA, 0, $1, 0, 0, 0); 
+									  //astreePrint($$,0);
 									  astreeDecompile($1,ASTREE_PROGRAMA);
 									}
 	 ;
@@ -203,7 +205,11 @@ resto_argumentos : ','  expressao resto_argumentos			 { $$ = astreeCreate(ASTREE
 
 
 %%
+ASTREE *get_ASTREE_root ()
+{
+	return root;
 
+}
 
 int yyerror ()
 {

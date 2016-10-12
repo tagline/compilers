@@ -94,7 +94,7 @@ void astreePrint(ASTREE *node, int level)
 		
 
 		if(node->symbol) {
-			fprintf(stderr, "%s) \n", node->symbol->text);
+			fprintf(stderr, "%s, Type: %d) \n", node->symbol->text, node->symbol->data_type);
 		}
 		else
 			fprintf(stderr," \n");

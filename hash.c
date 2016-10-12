@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include "y.tab.h"
 
 HASH_NODE* Table[HASH_SIZE];
 
@@ -20,9 +20,35 @@ int hashAddress(char *text)
 	return address - 1;
 }
 
+HASH_NODE *HashFind (char *text)
+{
+	int address = hashAddress(text);
+	HASH_NODE *node;
+
+	for (node=Table[address]; node; node=node->next){
+		if ((strcmp(node->text, text)==0)){
+			return node;
+		}
+	}
+
+	return 0;
+}
+
 HASH_NODE *hashInsert(int type, char* text)
 {
 	int address;
+
+	HASH_NODE *existing= malloc(sizeof(HASH_NODE));
+	existing =  HashFind(text);
+
+	if (type == TK_IDENTIFIER)
+	{
+		if (existing)
+		{
+			return existing;
+		}
+	}
+
 
 	HASH_NODE *testnode;
 	HASH_NODE *newnode= malloc(sizeof(HASH_NODE));
@@ -53,17 +79,7 @@ HASH_NODE *hashInsert(int type, char* text)
 	return newnode;
 }
 
-HASH_NODE *HashFind (char *text)
-{
-	int address = hashAddress(text);
-	HASH_NODE *node;
 
-	for (node=Table[address]; node; node=node->next)
-		if (strcmp(node->text, text))
-			return node;
-
-	return 0;
-}
 
 void hashPrint(void)
 {
