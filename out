@@ -1,6 +1,6 @@
-int b:7;
+bool b:TRUE;
 int a:5;
-int main (int b,bool c)
+int main (int x,bool c)
 {
 
 {
@@ -8,20 +8,13 @@ int main (int b,bool c)
 
 }
 ;
-a=5 + b;
+a=7 * (5 + b) - 12;
 
 }
 ;
 int teste ()
 {
-;
-
-{
-;
-
-}
-;
-a=main();
+for(b = 1 to 10) a=main();
 ;
 ;
 
