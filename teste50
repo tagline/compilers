@@ -1,10 +1,12 @@
 int b:7;
+int a:5;
 
-int main()
+int main(int b, bool c)
 {
   {;}; a = 5+b;
 };
 
 int teste()
-{;{;};;;
+{;{;};
+	a=main();;;
 };

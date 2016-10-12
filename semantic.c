@@ -17,37 +17,103 @@ int setTypes(ASTREE *node)
 	
 
 	if (node->type == ASTREE_VARIAVEL||
-		node->type ==ASTREE_VETOR_DECLARADO_1||
-		node->type ==ASTREE_VETOR_DECLARADO_2||
-		node->type == ASTREE_DECLARACAO_FUNCAO||
 		node->type == ASTREE_PARAMETROS||
 		node->type == ASTREE_PARAMETROS_RESTO
 		) 
 	{
 		int sonType;
 		sonType = setTypes(node->son[0]);
-		if (sonType == ASTREE_INT)
+		if (sonType == ASTREE_INT){
 			node->symbol->data_type = HASH_INT;
-		if (sonType == ASTREE_FLOAT)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (sonType == ASTREE_FLOAT){
 			node->symbol->data_type = HASH_FLOAT;
-		if (sonType == ASTREE_BOOL)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (sonType == ASTREE_BOOL){
 			node->symbol->data_type = HASH_BOOL;
-		if (sonType == ASTREE_CHAR)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (sonType == ASTREE_CHAR){
 			node->symbol->data_type = HASH_CHAR;
+			node->symbol->nature	= HASH_SCALAR;
+		}
+
 	}
+
+	if (node->type == ASTREE_DECLARACAO_FUNCAO
+		) 
+	{
+		int sonType;
+		sonType = setTypes(node->son[0]);
+		if (sonType == ASTREE_INT){
+			node->symbol->data_type = HASH_INT;
+			node->symbol->nature	= HASH_FUNCTION;
+		}
+		if (sonType == ASTREE_FLOAT){
+			node->symbol->data_type = HASH_FLOAT;
+			node->symbol->nature	= HASH_FUNCTION;
+		}
+		if (sonType == ASTREE_BOOL){
+			node->symbol->data_type = HASH_BOOL;
+			node->symbol->nature	= HASH_FUNCTION;
+		}
+		if (sonType == ASTREE_CHAR){
+			node->symbol->data_type = HASH_CHAR;
+			node->symbol->nature	= HASH_FUNCTION;
+		}
+
+	}
+
+	if (node->type ==ASTREE_VETOR_DECLARADO_1||
+		node->type ==ASTREE_VETOR_DECLARADO_2
+		) 
+	{
+		int sonType;
+		sonType = setTypes(node->son[0]);
+		if (sonType == ASTREE_INT){
+			node->symbol->data_type = HASH_INT;
+			node->symbol->nature	= HASH_VECTOR;
+		}
+		if (sonType == ASTREE_FLOAT){
+			node->symbol->data_type = HASH_FLOAT;
+			node->symbol->nature	= HASH_VECTOR;
+		}
+		if (sonType == ASTREE_BOOL){
+			node->symbol->data_type = HASH_BOOL;
+			node->symbol->nature	= HASH_VECTOR;
+		}
+		if (sonType == ASTREE_CHAR){
+			node->symbol->data_type = HASH_CHAR;
+			node->symbol->nature	= HASH_VECTOR;
+		}
+
+	}
+
 
 	if (node->symbol)
 	{
-		if (node->symbol->type == LIT_INTEGER)
+		if (node->symbol->type == LIT_INTEGER){
 			node->symbol->data_type = HASH_INT;
-		if (node->symbol->type == LIT_CHAR)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (node->symbol->type == LIT_CHAR){
 			node->symbol->data_type = HASH_CHAR;
-		if (node->symbol->type == LIT_STRING)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (node->symbol->type == LIT_STRING){
 			node->symbol->data_type = HASH_STRING;
-		if (node->symbol->type == LIT_FALSE)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (node->symbol->type == LIT_FALSE){
 			node->symbol->data_type = HASH_BOOL;
-		if (node->symbol->type == LIT_TRUE)
+			node->symbol->nature	= HASH_SCALAR;
+		}
+		if (node->symbol->type == LIT_TRUE){
 			node->symbol->data_type = HASH_BOOL;
+			node->symbol->nature	= HASH_SCALAR;
+		}
 	}
 
 

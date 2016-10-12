@@ -7,8 +7,10 @@
 # define HASH_FLOAT 	2 
 # define HASH_BOOL 	3 
 # define HASH_CHAR 	4 
-# define HASH_STRING 5 
-
+# define HASH_STRING 5
+# define HASH_SCALAR 11
+# define HASH_VECTOR 12
+# define HASH_FUNCTION 13
 
 typedef struct hash_node
 {

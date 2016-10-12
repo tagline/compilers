@@ -1,35 +1,29 @@
-int a:1;
-int b:2;
-int i:3;
-int main2 (int a,int b)
+int b:7;
+int a:5;
+int main (int b,bool c)
 {
-;
-;
+
+{
 ;
 
 }
 ;
-int func1 (int a,int b)
-{
-if (a > b) then a=0 else b=4;
-if (b == 1) then return b;
+a=5 + b;
 
 }
 ;
-float func2 ()
+int teste ()
 {
-a=a + 1;
-print "okokokok" ;
-print a " " i " aquiiiii" ;
+;
+
+{
+;
 
 }
 ;
-int func (int a,bool b)
-{
-read b;
-b[a + 2] = func2();
-for(b[a + 2] == 10) if (1) then ;
-return a;
+a=main();
+;
+;
 
 }
 ;
