@@ -3,10 +3,10 @@
 //--------------------------------------------//
 
 # define HASH_SIZE 	997
-# define HASH_INT 	1 
-# define HASH_FLOAT 	2 
-# define HASH_BOOL 	3 
-# define HASH_CHAR 	4 
+# define HASH_INT 	2 
+# define HASH_FLOAT 	3 
+# define HASH_BOOL 	4 
+# define HASH_CHAR 	1 
 # define HASH_STRING 5
 # define HASH_SCALAR 11
 # define HASH_VECTOR 12

@@ -178,77 +178,111 @@ int checkExpression(ASTREE *node)
 	int expType = 0;
 	if (node->type == ASTREE_SYMBOL)
 		return node->symbol->data_type;
+	if (node->type == ASTREE_EXP_PARENTESES)
+		return checkExpression(node->son[0]);
+
+
+
+	if (node->type == ASTREE_VETOR)
+		return checkExpression(node->son[0]);
+
+
+
+
+	if (node->type == ASTREE_CHAMADA_FUNCAO)
+		return checkExpression(node->son[0]);
+	
+	if (node->type == ASTREE_NEGACAO)
+		return checkExpression(node->son[0]);
 
 	if(node->son[0]->symbol && node->son[1]->symbol){
 		expType = compareTypesExp(node->son[0]->symbol->data_type,node->son[1]->symbol->data_type);
 		if(expType == -1)
-			semanticError(node->symbol->line);
+			semanticError(node->son[0]->symbol->line);
 		if(compareNatures(node->son[0],node->son[1]))
 			return expType;
 		else
-			semanticError(node->symbol->line);
+			semanticError(node->son[0]->symbol->line);
 	}
-
 	return(compareTypesExp(checkExpression(node->son[0]),checkExpression(node->son[1])));	
 }
 
+int checkAttribution(ASTREE *node)
+{
+	if (node->symbol->data_type>4||node->symbol->data_type==0)
+		semanticError(node->symbol->line);
+	if (node->symbol->data_type == HASH_BOOL)
+		if (checkExpression(node->son[0])==HASH_BOOL)
+			return HASH_BOOL;
+	if (node->symbol->data_type>=checkExpression(node->son[0]))
+		return node->symbol->data_type;
+	semanticError(node->symbol->line);
+
+}
 
 int checkSemantic(ASTREE *node)
 {
-
-	switch(node->type)
+	if(node)
 	{
-		case ASTREE_SYMBOL :	 		fprintf(stderr, "ASTREE_SYMBOL"); break;			
-		case ASTREE_CMD_ATRIBUICAO : 	fprintf(stderr, "ASTREE_CMD_ATRIBUICAO"); break;
-		case ASTREE_CMD_IF : 			fprintf(stderr, "ASTREE_CMD_IF"); break;
-		case ASTREE_CMD_IF_ELSE : 		fprintf(stderr, "ASTREE_CMD_IF_ELSE"); break;
-		case ASTREE_CMD_FOR : 			fprintf(stderr, "ASTREE_CMD_FOR"); break;
-		case ASTREE_CMD_FOR_TO : 		fprintf(stderr, "ASTREE_CMD_FOR_TO"); break;
-		case ASTREE_CMD_READ : 			fprintf(stderr, "ASTREE_CMD_READ"); break;
-		case ASTREE_CMD_PRINT : 		fprintf(stderr, "ASTREE_CMD_PRINT"); break;
-		case ASTREE_CMD_RETURN : 		fprintf(stderr, "ASTREE_CMD_RETURN"); break;
-		case ASTREE_VETOR : 			fprintf(stderr, "ASTREE_VETOR"); break;
-		case ASTREE_CHAMADA_FUNCAO : 	fprintf(stderr, "ASTREE_CHAMADA_FUNCAO"); break;
-		case ASTREE_EXP_PARENTESES: 	fprintf(stderr, "ASTREE_EXP_PARENTESES"); break;
-		case ASTREE_NEGACAO : 			fprintf(stderr, "ASTREE_NEGACAO"); break;
-		case ASTREE_ADD : 				fprintf(stderr, "ASTREE_ADD"); break;
-		case ASTREE_SUB : 				fprintf(stderr, "ASTREE_SUB"); break;
-		case ASTREE_MUL : 				fprintf(stderr, "ASTREE_MUL"); break;
-		case ASTREE_DIV : 				fprintf(stderr, "ASTREE_DIV"); break;
-		case ASTREE_MENOR : 			fprintf(stderr, "ASTREE_MENOR"); break;
-		case ASTREE_MAIOR : 			fprintf(stderr, "ASTREE_MAIOR"); break;
-		case ASTREE_LE : 				fprintf(stderr, "ASTREE_LE"); break;
-		case ASTREE_GE : 				fprintf(stderr, "ASTREE_GE"); break;
-		case ASTREE_EQ : 				fprintf(stderr, "ASTREE_EQ"); break;
-		case ASTREE_NE : 				fprintf(stderr, "ASTREE_NE"); break;
-		case ASTREE_AND : 				fprintf(stderr, "ASTREE_AND"); break;
-		case ASTREE_OR : 				fprintf(stderr, "ASTREE_OR"); break;
-		case ASTREE_ARGUMENTOS : 		fprintf(stderr, "ASTREE_ARGUMENTOS"); break;
-		case ASTREE_RESTO_ARGUMENTOS : 	fprintf(stderr, "ASTREE_RESTO_ARGUMENTOS"); break;
-		case ASTREE_LISTA_COMANDOS :	fprintf(stderr, "ASTREE_LISTA_COMANDOS"); break;
-		case ASTREE_COMANDOS :			fprintf(stderr, "ASTREE_COMANDOS"); break;
-		case ASTREE_LISTA_DECLARACOES :	fprintf(stderr, "ASTREE_LISTA_DECLARACOES"); break;
-		case ASTREE_DECLARACOES :		fprintf(stderr, "ASTREE_DECLARACOES"); break;
-		case ASTREE_VARIAVEL :			fprintf(stderr, "ASTREE_VARIAVEL"); break;
-		case ASTREE_VETOR_DECLARADO_1 :	fprintf(stderr, "ASTREE_VETOR_DECLARADO_1"); break;
-		case ASTREE_VETOR_DECLARADO_2 :	fprintf(stderr, "ASTREE_VETOR_DECLARADO_2"); break;
-		case ASTREE_INT :				fprintf(stderr, "ASTREE_INT"); break;
-		case ASTREE_FLOAT :				fprintf(stderr, "ASTREE_FLOAT"); break;
-		case ASTREE_BOOL :				fprintf(stderr, "ASTREE_BOOL"); break;
-		case ASTREE_CHAR :				fprintf(stderr, "ASTREE_CHAR"); break;
-		case ASTREE_DECLARACAO_FUNCAO:	fprintf(stderr, "ASTREE_DECLARACAO_FUNCAO"); break;
-		case ASTREE_BLOCO :				fprintf(stderr, "ASTREE_BLOCO"); break;
-		case ASTREE_PARAMETROS:			fprintf(stderr, "ASTREE_PARAMETROS"); break;
-		case ASTREE_PARAMETROS_RESTO:	fprintf(stderr, "ASTREE_PARAMETROS_RESTO"); break;			
-		case ASTREE_PROGRAMA:			fprintf(stderr, "ASTREE_PROGRAMA"); break;
-		case ASTREE_VETOR_CONTEUDO:		fprintf(stderr, "ASTREE_VETOR_CONTEUDO"); break;		
-		default: 						fprintf(stderr, "ASTREE_UNKNOWN"); break;			
+		switch(node->type)
+		{	
+			printf("oi");
+			case ASTREE_SYMBOL :			checkExpression(node);break;
+			case ASTREE_CMD_ATRIBUICAO : 	checkAttribution(node);break;
+			case ASTREE_CMD_IF : 			break;
+			case ASTREE_CMD_IF_ELSE : 		break;
+			case ASTREE_CMD_FOR : 			break;
+			case ASTREE_CMD_FOR_TO : 		break;
+			case ASTREE_CMD_READ : 			break;
+			case ASTREE_CMD_PRINT : 		break;
+			case ASTREE_CMD_RETURN : 		break;
+			case ASTREE_VETOR : 			checkExpression(node);break;
+			case ASTREE_CHAMADA_FUNCAO : 	checkExpression(node);break;
+			case ASTREE_EXP_PARENTESES: 	checkExpression(node);break;
+			case ASTREE_NEGACAO : 			checkExpression(node);break;
+			case ASTREE_ADD : 				checkExpression(node);break;
+			case ASTREE_SUB : 				checkExpression(node);break;
+			case ASTREE_MUL : 				checkExpression(node);break;
+			case ASTREE_DIV : 				checkExpression(node);break;
+			case ASTREE_MENOR : 			checkExpression(node);break;
+			case ASTREE_MAIOR : 			checkExpression(node);break;
+			case ASTREE_LE : 				checkExpression(node);break;
+			case ASTREE_GE : 				checkExpression(node);break;
+			case ASTREE_EQ : 				checkExpression(node);break;
+			case ASTREE_NE : 				checkExpression(node);break;
+			case ASTREE_AND : 				checkExpression(node);break;
+			case ASTREE_OR : 				checkExpression(node);break;
+			case ASTREE_ARGUMENTOS : 		break;
+			case ASTREE_RESTO_ARGUMENTOS : 	break;
+			case ASTREE_LISTA_COMANDOS :	break;
+			case ASTREE_COMANDOS :			break;
+			case ASTREE_LISTA_DECLARACOES :	break;
+			case ASTREE_DECLARACOES :		break;
+			case ASTREE_VARIAVEL :			break;
+			case ASTREE_VETOR_DECLARADO_1 :	break;
+			case ASTREE_VETOR_DECLARADO_2 :	break;
+			case ASTREE_INT :				break;
+			case ASTREE_FLOAT :				break;
+			case ASTREE_BOOL :				break;
+			case ASTREE_CHAR :				break;
+			case ASTREE_DECLARACAO_FUNCAO:	break;
+			case ASTREE_BLOCO :				break;
+			case ASTREE_PARAMETROS:			break;
+			case ASTREE_PARAMETROS_RESTO:	break;			
+			case ASTREE_PROGRAMA:			break;
+			case ASTREE_VETOR_CONTEUDO:		break;		
+			default: 						break;			
+		}
+
+		int i;
+
+		for(i=0; i<MAX_SONS; i++)
+		{
+			checkSemantic(node->son[i]);		
+		}
+
 	}
-
-
-
-
-
+	
 
 }
 

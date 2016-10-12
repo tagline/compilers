@@ -1,0 +1,14 @@
+bool b:TRUE;
+char a:5;
+int main (int x,bool c)
+{
+x=TRUE + b;
+
+}
+;
+int teste ()
+{
+;
+
+}
+;

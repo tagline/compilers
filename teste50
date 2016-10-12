@@ -1,13 +1,13 @@
 bool	 b:TRUE;
-int a:5;
+char a:5;
 
 int main(int x, bool c)
 {
-  {;}; a = 7*(5+b)-12;
+  x=TRUE+ b;
 };
 
 int teste()
 {
-	for (b = 1 to 10)
-	a=main();;;
+	;
+	
 };

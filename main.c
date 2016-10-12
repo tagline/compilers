@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	setTypes(root);
 	
 	astreePrint(root, 0);
-	
+	checkSemantic(root);
 	// se der sucesso, retorna 0 como saída //
 	exit(0);
 
