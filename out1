@@ -1,26 +1,24 @@
-int b:7;
+int a:0;
+int i:0;
+float v[10]: 0000000000;
+bool mat[1000] ;
+char c:'x';
 int main ()
 {
-
-{
-;
-
-}
-;
-a=5 + b;
+for(i = TRUE to 10) print i " " ;
+print " Digite um Snumero: \n" ;
+read i;
 
 }
 ;
-int teste ()
+int incn (int x,int n)
 {
-;
-
-{
-;
+return x + n;
 
 }
 ;
-;
+int voidfunc ()
+{
 ;
 
 }

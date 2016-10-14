@@ -8,7 +8,7 @@ char c: 'x';
 
 int main()
   {
-  for (i = 1 to 10)
+  for (i = TRUE to 10)
     print i " ";
 
   print " Digite um Snumero: \n";

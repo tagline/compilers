@@ -67,10 +67,11 @@ typedef struct astree_node
 	int type; 
 	HASH_NODE *symbol;
 	struct astree_node *son[MAX_SONS];
+	int line;
 	
 } ASTREE;
 
-ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3);
+ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3,int line);
 void astreePrint(ASTREE *node, int level);
 void astreeDecompile(ASTREE *astree, int node_father);
 

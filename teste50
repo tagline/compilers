@@ -1,9 +1,9 @@
 bool	 b:TRUE;
-char a:5;
+int a:5;
 
 int main(int x, bool c)
 {
-  x=TRUE+ b;
+  x=a+3;
 };
 
 int teste()

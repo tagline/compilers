@@ -169,7 +169,7 @@ int compareNatures(ASTREE *node1,ASTREE *node2)
 {
 	if(node1->symbol->nature == node2->symbol->nature)
 		return 1;
-	semanticError(node1->symbol->line);
+	semanticError(node1->line);
 }
 
 
@@ -178,13 +178,16 @@ int checkExpression(ASTREE *node)
 	int expType = 0;
 	if (node->type == ASTREE_SYMBOL)
 		return node->symbol->data_type;
+
 	if (node->type == ASTREE_EXP_PARENTESES)
 		return checkExpression(node->son[0]);
-
-
-
-	if (node->type == ASTREE_VETOR)
-		return checkExpression(node->son[0]);
+	if (node->type == ASTREE_VETOR){
+		if(checkExpression(node->son[0])!= HASH_INT)
+			semanticError(node->line);
+		if(node->symbol->nature != HASH_VECTOR)
+			semanticError(node->line);
+		return node->symbol->data_type;
+	}
 
 
 
@@ -198,27 +201,69 @@ int checkExpression(ASTREE *node)
 	if(node->son[0]->symbol && node->son[1]->symbol){
 		expType = compareTypesExp(node->son[0]->symbol->data_type,node->son[1]->symbol->data_type);
 		if(expType == -1)
-			semanticError(node->son[0]->symbol->line);
+			semanticError(node->line);
 		if(compareNatures(node->son[0],node->son[1]))
 			return expType;
 		else
-			semanticError(node->son[0]->symbol->line);
+			semanticError(node->line);
 	}
 	return(compareTypesExp(checkExpression(node->son[0]),checkExpression(node->son[1])));	
 }
 
 int checkAttribution(ASTREE *node)
 {
+	//Not string or undefined
 	if (node->symbol->data_type>4||node->symbol->data_type==0)
-		semanticError(node->symbol->line);
-	if (node->symbol->data_type == HASH_BOOL)
+		semanticError(node->line);
+	//BOOL with BOOL
+	if (node->symbol->data_type == HASH_BOOL){
 		if (checkExpression(node->son[0])==HASH_BOOL)
 			return HASH_BOOL;
+		else
+			semanticError(node->line);
+		}
+	//FLOAT INT CHAR
 	if (node->symbol->data_type>=checkExpression(node->son[0]))
 		return node->symbol->data_type;
-	semanticError(node->symbol->line);
+	semanticError(node->line);
 
 }
+
+int checkIF(ASTREE *node)
+{
+	//Condition
+	checkExpression(node->son[0]);
+	//Then
+	checkSemantic(node->son[1]);
+	//Else
+	if (node->type == ASTREE_CMD_IF_ELSE)
+		checkSemantic(node->son[2]);
+}
+
+int checkFOR(ASTREE *node)
+{
+	//Control
+	checkExpression(node->son[0]);
+	//Command
+	checkSemantic(node->son[1]);
+}
+
+int checkFORTO(ASTREE *node)
+{
+	//Control
+	int controlType = 0;
+	controlType = compareTypesExp(checkExpression(node->son[0]),node->symbol->data_type);
+	if(controlType)
+	{
+	if(compareTypesExp(controlType,checkExpression(node->son[1]))==-1);
+		semanticError(node->line);
+	//Command
+	checkSemantic(node->son[2]);
+	}
+	else
+		semanticError(node->line);
+}
+
 
 int checkSemantic(ASTREE *node)
 {
@@ -226,13 +271,12 @@ int checkSemantic(ASTREE *node)
 	{
 		switch(node->type)
 		{	
-			printf("oi");
 			case ASTREE_SYMBOL :			checkExpression(node);break;
 			case ASTREE_CMD_ATRIBUICAO : 	checkAttribution(node);break;
-			case ASTREE_CMD_IF : 			break;
-			case ASTREE_CMD_IF_ELSE : 		break;
-			case ASTREE_CMD_FOR : 			break;
-			case ASTREE_CMD_FOR_TO : 		break;
+			case ASTREE_CMD_IF : 			checkIF(node);break;
+			case ASTREE_CMD_IF_ELSE : 		checkIF(node);break;
+			case ASTREE_CMD_FOR : 			checkFOR(node);break;
+			case ASTREE_CMD_FOR_TO : 		checkFORTO(node);break;
 			case ASTREE_CMD_READ : 			break;
 			case ASTREE_CMD_PRINT : 		break;
 			case ASTREE_CMD_RETURN : 		break;

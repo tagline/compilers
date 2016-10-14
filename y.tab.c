@@ -1397,7 +1397,7 @@ yyreduce:
     {
         case 2:
 #line 96 "parser.y" /* yacc.c:1646  */
-    { root = astreeCreate(ASTREE_PROGRAMA, 0, (yyvsp[0].astree), 0, 0, 0); 
+    { root = astreeCreate(ASTREE_PROGRAMA, 0, (yyvsp[0].astree), 0, 0, 0, getLineNumber()); 
 									  //astreePrint($$,0);
 									  astreeDecompile((yyvsp[0].astree),ASTREE_PROGRAMA);
 									}
@@ -1406,103 +1406,103 @@ yyreduce:
 
   case 3:
 #line 102 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_LISTA_DECLARACOES,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_LISTA_DECLARACOES,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0, getLineNumber()); }
 #line 1411 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 103 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_LISTA_DECLARACOES,0,(yyvsp[0].astree),0,0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_LISTA_DECLARACOES,0,(yyvsp[0].astree),0,0,0, getLineNumber()); }
 #line 1417 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 106 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_DECLARACOES,0,(yyvsp[-1].astree),0,0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_DECLARACOES,0,(yyvsp[-1].astree),0,0,0, getLineNumber()); }
 #line 1423 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 107 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_DECLARACOES,0,(yyvsp[-1].astree),0,0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_DECLARACOES,0,(yyvsp[-1].astree),0,0,0, getLineNumber()); }
 #line 1429 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 108 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_DECLARACOES,0,(yyvsp[-1].astree),0,0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_DECLARACOES,0,(yyvsp[-1].astree),0,0,0, getLineNumber()); }
 #line 1435 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 111 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_VARIAVEL,(yyvsp[-2].symbol),(yyvsp[-3].astree),(yyvsp[0].astree),0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_VARIAVEL,(yyvsp[-2].symbol),(yyvsp[-3].astree),(yyvsp[0].astree),0,0, getLineNumber()); }
 #line 1441 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 115 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_VETOR_DECLARADO_1,(yyvsp[-3].symbol),(yyvsp[-4].astree),(yyvsp[-1].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_VETOR_DECLARADO_1,(yyvsp[-3].symbol),(yyvsp[-4].astree),(yyvsp[-1].astree),0,0, getLineNumber());	}
 #line 1447 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 116 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_VETOR_DECLARADO_2,(yyvsp[-5].symbol),(yyvsp[-6].astree),(yyvsp[-3].astree),(yyvsp[0].astree),0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_VETOR_DECLARADO_2,(yyvsp[-5].symbol),(yyvsp[-6].astree),(yyvsp[-3].astree),(yyvsp[0].astree),0, getLineNumber());	}
 #line 1453 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 119 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_VETOR_CONTEUDO,0,(yyvsp[0].astree),(yyvsp[-1].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_VETOR_CONTEUDO,0,(yyvsp[0].astree),(yyvsp[-1].astree),0,0, getLineNumber());	}
 #line 1459 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 120 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_VETOR_CONTEUDO,0,(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_VETOR_CONTEUDO,0,(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1465 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 123 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());	}
 #line 1471 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 124 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());	}
 #line 1477 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 125 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());	}
 #line 1483 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 126 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());	}
 #line 1489 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 127 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());	}
 #line 1495 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 130 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_DECLARACAO_FUNCAO,(yyvsp[-4].symbol),(yyvsp[-5].astree),(yyvsp[-2].astree),(yyvsp[0].astree),0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_DECLARACAO_FUNCAO,(yyvsp[-4].symbol),(yyvsp[-5].astree),(yyvsp[-2].astree),(yyvsp[0].astree),0, getLineNumber());	}
 #line 1501 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 133 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_PARAMETROS,(yyvsp[-1].symbol),(yyvsp[-2].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_PARAMETROS,(yyvsp[-1].symbol),(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1507 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1514,7 +1514,7 @@ yyreduce:
 
   case 21:
 #line 137 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_PARAMETROS_RESTO,(yyvsp[-1].symbol),(yyvsp[-2].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_PARAMETROS_RESTO,(yyvsp[-1].symbol),(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1519 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1526,97 +1526,97 @@ yyreduce:
 
   case 23:
 #line 142 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_INT,0,0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_INT,0,0,0,0,0, getLineNumber());	}
 #line 1531 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 143 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_FLOAT,0,0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_FLOAT,0,0,0,0,0, getLineNumber());	}
 #line 1537 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 144 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_BOOL,0,0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_BOOL,0,0,0,0,0, getLineNumber());	}
 #line 1543 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
 #line 145 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CHAR,0,0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CHAR,0,0,0,0,0, getLineNumber());	}
 #line 1549 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 148 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_BLOCO,0,(yyvsp[-1].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_BLOCO,0,(yyvsp[-1].astree),0,0,0, getLineNumber());	}
 #line 1555 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 152 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_LISTA_COMANDOS,0,(yyvsp[-2].astree),(yyvsp[-1].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_LISTA_COMANDOS,0,(yyvsp[-2].astree),(yyvsp[-1].astree),0,0, getLineNumber());	}
 #line 1561 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
 #line 153 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_LISTA_COMANDOS,0,(yyvsp[-1].astree),0,0,0);  }
+    { (yyval.astree) = astreeCreate(ASTREE_LISTA_COMANDOS,0,(yyvsp[-1].astree),0,0,0, getLineNumber());  }
 #line 1567 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 156 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_ATRIBUICAO,(yyvsp[-2].symbol),(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_ATRIBUICAO,(yyvsp[-2].symbol),(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1573 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 157 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_ATRIBUICAO_VETOR,(yyvsp[-5].symbol),(yyvsp[-3].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_ATRIBUICAO_VETOR,(yyvsp[-5].symbol),(yyvsp[-3].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1579 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 158 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_IF,0,(yyvsp[-3].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_IF,0,(yyvsp[-3].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1585 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 159 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_IF_ELSE,0,(yyvsp[-5].astree),(yyvsp[-2].astree),(yyvsp[0].astree),0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_IF_ELSE,0,(yyvsp[-5].astree),(yyvsp[-2].astree),(yyvsp[0].astree),0, getLineNumber());	}
 #line 1591 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 160 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_FOR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_FOR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1597 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 161 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_FOR_TO,(yyvsp[-6].symbol),(yyvsp[-4].astree),(yyvsp[-2].astree),(yyvsp[0].astree),0); }
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_FOR_TO,(yyvsp[-6].symbol),(yyvsp[-4].astree),(yyvsp[-2].astree),(yyvsp[0].astree),0, getLineNumber()); }
 #line 1603 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 162 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,0,(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,0,(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1609 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 163 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_READ,(yyvsp[0].symbol),0,0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_READ,(yyvsp[0].symbol),0,0,0,0, getLineNumber());	}
 #line 1615 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 164 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_RETURN,0,(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_RETURN,0,(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1621 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1634,157 +1634,157 @@ yyreduce:
 
   case 41:
 #line 169 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,(yyvsp[-1].symbol),(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,(yyvsp[-1].symbol),(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1639 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
 #line 170 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1645 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
 #line 171 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,(yyvsp[0].symbol),0,0,0,0);       }
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,(yyvsp[0].symbol),0,0,0,0, getLineNumber());       }
 #line 1651 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 172 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,0,(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_CMD_PRINT,0,(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1657 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 175 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());		}
 #line 1663 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
 #line 176 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());		}
 #line 1669 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 177 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());		}
 #line 1675 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
 #line 178 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());		}
 #line 1681 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 179 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_SYMBOL,(yyvsp[0].symbol),0,0,0,0, getLineNumber());		}
 #line 1687 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 180 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_VETOR,(yyvsp[-3].symbol),(yyvsp[-1].astree),0,0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_VETOR,(yyvsp[-3].symbol),(yyvsp[-1].astree),0,0,0, getLineNumber());		}
 #line 1693 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 181 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_CHAMADA_FUNCAO,(yyvsp[-3].symbol),(yyvsp[-1].astree),0,0,0);}
+    { (yyval.astree) = astreeCreate(ASTREE_CHAMADA_FUNCAO,(yyvsp[-3].symbol),(yyvsp[-1].astree),0,0,0, getLineNumber());}
 #line 1699 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 182 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_EXP_PARENTESES,0,(yyvsp[-1].astree),0,0,0); }
+    { (yyval.astree) = astreeCreate(ASTREE_EXP_PARENTESES,0,(yyvsp[-1].astree),0,0,0, getLineNumber()); }
 #line 1705 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 183 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_NEGACAO,0,(yyvsp[0].astree),0,0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_NEGACAO,0,(yyvsp[0].astree),0,0,0, getLineNumber());	}
 #line 1711 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
 #line 184 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_ADD,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_ADD,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1717 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 185 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_SUB,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_SUB,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1723 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 186 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_MUL,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_MUL,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1729 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 187 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_DIV,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_DIV,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1735 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 188 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_MENOR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_MENOR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1741 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 189 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_MAIOR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_MAIOR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1747 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
 #line 190 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_LE,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_LE,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1753 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
 #line 191 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_GE,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_GE,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1759 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
 #line 192 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_EQ,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_EQ,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1765 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 193 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_NE,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_NE,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1771 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
 #line 194 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_AND,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_AND,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1777 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
 #line 195 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_OR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0);		}
+    { (yyval.astree) = astreeCreate(ASTREE_OR,0,(yyvsp[-2].astree),(yyvsp[0].astree),0,0, getLineNumber());		}
 #line 1783 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
 #line 198 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_ARGUMENTOS,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0);	}
+    { (yyval.astree) = astreeCreate(ASTREE_ARGUMENTOS,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0, getLineNumber());	}
 #line 1789 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1796,7 +1796,7 @@ yyreduce:
 
   case 68:
 #line 202 "parser.y" /* yacc.c:1646  */
-    { (yyval.astree) = astreeCreate(ASTREE_RESTO_ARGUMENTOS,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0);}
+    { (yyval.astree) = astreeCreate(ASTREE_RESTO_ARGUMENTOS,0,(yyvsp[-1].astree),(yyvsp[0].astree),0,0, getLineNumber());}
 #line 1801 "y.tab.c" /* yacc.c:1646  */
     break;
 

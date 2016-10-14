@@ -10,7 +10,7 @@
 
 extern FILE *fileout;
 
-ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3) 
+ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3,int line) 
 {
 	ASTREE *newNode = 0;
 
@@ -23,7 +23,7 @@ ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, AS
 	newNode->son[1] = son1;
 	newNode->son[2] = son2;
 	newNode->son[3] = son3;
-
+	newNode->line = line;
 	return newNode;
 }
 
