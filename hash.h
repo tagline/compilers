@@ -19,6 +19,7 @@ typedef struct hash_node
 	int data_type;
 	char *text;
 	int line;
+	int declared;
 	struct hash_node * next;
 } HASH_NODE;
 

@@ -1,7 +1,7 @@
 bool	 b:TRUE;
 int a:5;
 
-int main(int x, bool c)
+int main(int z, bool c)
 {
   x=a+3;
 };

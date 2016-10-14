@@ -47,6 +47,10 @@ int setTypes(ASTREE *node)
 			node->symbol->data_type = HASH_CHAR;
 			node->symbol->nature	= HASH_SCALAR;
 		}
+		if(node->symbol->declared == 0)
+			node->symbol->declared = 1;
+		else
+			semanticError(node->line);
 
 	}
 
@@ -168,10 +172,15 @@ int compareTypesExp(int type1,int type2)
 int compareNatures(ASTREE *node1,ASTREE *node2)
 {
 	if(node1->symbol->nature == node2->symbol->nature)
-		return 1;
+		return node1->symbol->nature;
 	semanticError(node1->line);
 }
 
+int checkFuncArguments (ASTREE *node)
+{
+
+
+}
 
 int checkExpression(ASTREE *node)
 {
@@ -181,10 +190,13 @@ int checkExpression(ASTREE *node)
 
 	if (node->type == ASTREE_EXP_PARENTESES)
 		return checkExpression(node->son[0]);
+
 	if (node->type == ASTREE_VETOR){
-		if(checkExpression(node->son[0])!= HASH_INT)
-			semanticError(node->line);
+		//Vector has to be a declared vector
 		if(node->symbol->nature != HASH_VECTOR)
+			semanticError(node->line);
+		//Vector index has to be int
+		if(checkExpression(node->son[0])!= HASH_INT)
 			semanticError(node->line);
 		return node->symbol->data_type;
 	}
@@ -192,8 +204,12 @@ int checkExpression(ASTREE *node)
 
 
 
-	if (node->type == ASTREE_CHAMADA_FUNCAO)
-		return checkExpression(node->son[0]);
+	if (node->type == ASTREE_CHAMADA_FUNCAO){
+		if (node->symbol->nature != HASH_FUNCTION)
+			semanticError(node->line);
+		checkFuncArguments(node->son[0]);
+		return node->symbol->data_type;
+	}
 	
 	if (node->type == ASTREE_NEGACAO)
 		return checkExpression(node->son[0]);
@@ -264,6 +280,13 @@ int checkFORTO(ASTREE *node)
 		semanticError(node->line);
 }
 
+int checkREAD(ASTREE *node)
+{
+	if (node->symbol->declared == 0)
+		semanticError(node->line);
+
+}
+
 
 int checkSemantic(ASTREE *node)
 {
@@ -277,7 +300,7 @@ int checkSemantic(ASTREE *node)
 			case ASTREE_CMD_IF_ELSE : 		checkIF(node);break;
 			case ASTREE_CMD_FOR : 			checkFOR(node);break;
 			case ASTREE_CMD_FOR_TO : 		checkFORTO(node);break;
-			case ASTREE_CMD_READ : 			break;
+			case ASTREE_CMD_READ : 			checkREAD(node);break;
 			case ASTREE_CMD_PRINT : 		break;
 			case ASTREE_CMD_RETURN : 		break;
 			case ASTREE_VETOR : 			checkExpression(node);break;

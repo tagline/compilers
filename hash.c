@@ -57,6 +57,7 @@ HASH_NODE *hashInsert(int type, char* text)
 	newnode->type = type;
 	newnode->nature = 0;
 	newnode->data_type = 0;
+	newnode->declared = 0;
 	newnode->text = (char*) calloc(strlen(text)+1,sizeof(char));
 	strcpy(newnode->text,text);
 	newnode->next = NULL;
