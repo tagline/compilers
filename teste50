@@ -6,14 +6,14 @@ int ricl[4]:2;
 int main(int x, bool c)
 {
 x=1+2;
-  x=ricl[2];
+  x=ricl[a];
 	print x;
-return 3;
+return 5;
 };
 
 int teste()
 {
-	a= main(a,b);;
+	l= main(l,b);;
 	
 };
 

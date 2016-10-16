@@ -86,8 +86,9 @@ void astreePrint(ASTREE *node, int level)
 			case ASTREE_PARAMETROS:			fprintf(stderr, "ASTREE_PARAMETROS"); break;
 			case ASTREE_PARAMETROS_RESTO:	fprintf(stderr, "ASTREE_PARAMETROS_RESTO"); break;			
 			case ASTREE_PROGRAMA:			fprintf(stderr, "ASTREE_PROGRAMA"); break;
-			case ASTREE_VETOR_CONTEUDO:		fprintf(stderr, "ASTREE_VETOR_CONTEUDO"); break;		
-			default: 						fprintf(stderr, "ASTREE_UNKNOWN"); break;			
+			case ASTREE_VETOR_CONTEUDO:		fprintf(stderr, "ASTREE_VETOR_CONTEUDO"); break;	
+			case ASTREE_CMD_ATRIBUICAO_VETOR :		fprintf(stderr, "ASTREE_CMD_ATRIBUICAO_VETOR "); break;
+			default: 						fprintf(stderr, "ASTREE_UNKNOWN %d",node->type); break;			
 		}
 		
 		fprintf(stderr,",");
