@@ -345,8 +345,8 @@ int checkReturn (ASTREE *node)
 
 int checkVectorValues (ASTREE *node,int type)
 {
-	printf("Func Type = %d", type);
-	printf("Type = %d", node->son[0]->symbol->data_type);
+//	printf("Func Type = %d", type);
+//	printf("Type = %d", node->son[0]->symbol->data_type);
 	if (node->son[0]->symbol->data_type!=type)
 		semanticError(node->line);
 	if (node->son[1])
@@ -356,7 +356,7 @@ int checkVectorValues (ASTREE *node,int type)
 
 int checkVectorDec (ASTREE *node)
 {
-	printf("Type = %d", node->son[1]->symbol->data_type);
+//	printf("Type = %d", node->son[1]->symbol->data_type);
 	if (node->son[1]->symbol->data_type!=HASH_INT)
 		semanticError(node->line);
 	if (node->son[2])
@@ -397,23 +397,23 @@ int checkSemantic(ASTREE *node)
 			case ASTREE_OR : 				checkExpression(node);break;
 			case ASTREE_ARGUMENTOS : 		break;
 			case ASTREE_RESTO_ARGUMENTOS : 	break;
-			case ASTREE_LISTA_COMANDOS :	break;
-			case ASTREE_COMANDOS :			break;
-			case ASTREE_LISTA_DECLARACOES :	break;
+			case ASTREE_LISTA_COMANDOS :	break;	//ja feito
+			case ASTREE_COMANDOS :			break;	//ja feito
+			case ASTREE_LISTA_DECLARACOES :	break;	//ja feito
 			case ASTREE_DECLARACOES :		break;
-			case ASTREE_VARIAVEL :			break;
+			case ASTREE_VARIAVEL :			break;	//ja feito
 			case ASTREE_VETOR_DECLARADO_1 :	checkVectorDec (node);break;
 			case ASTREE_VETOR_DECLARADO_2 :	checkVectorDec (node);break;
-			case ASTREE_INT :				break;
-			case ASTREE_FLOAT :				break;
-			case ASTREE_BOOL :				break;
-			case ASTREE_CHAR :				break;
+			case ASTREE_INT :				break;	//ja feito
+			case ASTREE_FLOAT :				break;	//ja feito
+			case ASTREE_BOOL :				break;	//ja feito
+			case ASTREE_CHAR :				break;	//ja feito
 			case ASTREE_DECLARACAO_FUNCAO:	checkFunction(node);break;
 			case ASTREE_BLOCO :				break;
 			case ASTREE_PARAMETROS:			break;
 			case ASTREE_PARAMETROS_RESTO:	break;			
 			case ASTREE_PROGRAMA:			break;
-			case ASTREE_VETOR_CONTEUDO:		break;		
+			case ASTREE_VETOR_CONTEUDO:		break;	//ja feito	
 			default: 						break;			
 		}
 

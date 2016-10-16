@@ -15,6 +15,8 @@ int main(int argc, char *argv[])
 	// para debugar o yacc
 	int yydebug=1; 
 	
+	initHash();
+	
 	// valida se foi foi passado o arquivo de entrada como parâmetro
 	if(argc < 3){
 		fprintf(stderr,"\nError: Call input filename.\n");

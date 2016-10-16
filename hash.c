@@ -10,6 +10,17 @@
 
 HASH_NODE* Table[HASH_SIZE];
 
+
+int initHash ()
+{
+	int i;
+	for(i=0;i<HASH_SIZE;i++)
+	{
+		Table[i] = NULL;
+	}
+
+}
+
 int hashAddress(char *text)
 { 
 	int i=0;
@@ -67,17 +78,18 @@ HASH_NODE *hashInsert(int type, char* text)
 	if (Table[address] != NULL)
 	{
 		testnode = Table[address];
-		printf("oi: %d\n",address);
-		if (testnode -> next ==NULL)
+		if (testnode -> next ==NULL){
 			testnode->next = newnode;
+			return newnode;
+		}
 		else
 		{
 			while (testnode->next != NULL)
 				testnode = testnode->next;
 			testnode->next = newnode;
+			return newnode;
 		}	
 	}
-	printf("%d\n",address);
 	Table[address] = newnode;
 
 	return newnode;
@@ -92,9 +104,24 @@ void hashPrint(void)
 
 	printf("\n ############ HASH TABLE ##########\n");
 
-	for(i=0;i<HASH_SIZE;i++)
+	for(i=0;i<HASH_SIZE;i++){
+		/*
 		for(node = Table[i]; node; node=node->next)
 			printf("Table[%d] has %s \n",i,node->text);
+		*/
+		if (Table[i])
+		{
+			node = Table[i]; 
+			printf("Table[%d] has %s \n",i,node->text);
+
+			while(node->next != NULL)
+			{
+				node = node->next;
+				printf("Table[%d] has %s \n",i,node->text);
+			}
+		}
+		
+	}
 
 	printf("##################################\n");
 

@@ -1,11 +1,11 @@
 bool b:TRUE;
 int a:5;
 int l:3;
-int ricl[3] ;
+bool ricl[3]: TRUETRUE;
 int main (int x,bool c)
 {
 x=1 + 2;
-x=l + 3;
+x=ricl;
 print x;
 return 3;
 
