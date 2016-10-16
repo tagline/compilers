@@ -52,12 +52,14 @@ HASH_NODE *hashInsert(int type, char* text)
 
 	HASH_NODE *testnode;
 	HASH_NODE *newnode= malloc(sizeof(HASH_NODE));
+
 	address = hashAddress(text);
 	newnode->line = getLineNumber();
 	newnode->type = type;
 	newnode->nature = 0;
 	newnode->data_type = 0;
 	newnode->declared = 0;
+	newnode->parameters = NULL;
 	newnode->text = (char*) calloc(strlen(text)+1,sizeof(char));
 	strcpy(newnode->text,text);
 	newnode->next = NULL;
@@ -65,7 +67,7 @@ HASH_NODE *hashInsert(int type, char* text)
 	if (Table[address] != NULL)
 	{
 		testnode = Table[address];
-		
+		printf("oi: %d\n",address);
 		if (testnode -> next ==NULL)
 			testnode->next = newnode;
 		else
@@ -75,6 +77,7 @@ HASH_NODE *hashInsert(int type, char* text)
 			testnode->next = newnode;
 		}	
 	}
+	printf("%d\n",address);
 	Table[address] = newnode;
 
 	return newnode;

@@ -1,9 +1,14 @@
 bool	 b:TRUE;
 int a:5;
+int l:3;
+int ricl[3];
 
-int main(int z, bool c)
+int main(int x, bool c)
 {
-  x=a+3;
+x=1+2;
+  x=l+3;
+	print x;
+return 3;
 };
 
 int teste()

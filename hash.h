@@ -12,6 +12,13 @@
 # define HASH_VECTOR 12
 # define HASH_FUNCTION 13
 
+typedef struct func_param
+{
+	int data_type;
+	struct func_param * next;
+
+} FUNC_PARAM;
+
 typedef struct hash_node
 {
 	int type;
@@ -20,6 +27,7 @@ typedef struct hash_node
 	char *text;
 	int line;
 	int declared;
+	struct func_param * parameters;
 	struct hash_node * next;
 } HASH_NODE;
 
