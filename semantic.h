@@ -7,7 +7,7 @@
 #include "y.tab.h"
 
 int setTypes(ASTREE *node);
-void semanticError(int line);
+void semanticError(int line, char *strError);
 int compareTypesExp(int type1,int type2);
 int compareNatures(ASTREE *node1,ASTREE *node2);
 int checkExpression(ASTREE *node);

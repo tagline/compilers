@@ -17,9 +17,10 @@ int main(int argc, char *argv[])
 	
 	initHash();
 	
-	// valida se foi foi passado o arquivo de entrada como parâmetro
+	// valida se foi passado o arquivo de entrada como parâmetro
 	if(argc < 3){
 		fprintf(stderr,"\nError: Call input filename.\n");
+		exit(1);
 	}
 
 	extern FILE* yyin;
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
 	}	
 	
 	yyparse();
+
 	ASTREE *root = 0;
 	hashPrint();
 	root = get_ASTREE_root();
@@ -48,6 +50,7 @@ int main(int argc, char *argv[])
 	
 	astreePrint(root, 0);
 	checkSemantic(root);
+
 	// se der sucesso, retorna 0 como saída //
 	exit(0);
 

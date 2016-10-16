@@ -9,9 +9,10 @@
 
 int currFuncType = 0;
 
-void semanticError(int line)
+void semanticError(int line, char *strError)
 {
-	printf ("Semantic Error: in line number %d\n", line);
+
+	printf ("Semantic Error in line number %d : %s \n", line, strError);
 	exit(4);
 }
 
@@ -50,8 +51,9 @@ int setTypes(ASTREE *node)
 		}
 		if(node->symbol->declared == 0)
 			node->symbol->declared = 1;
-		else
-			semanticError(node->line);
+		else 
+			semanticError(node->line, "VAR Undeclared or Redeclared");
+
 
 	}
 
@@ -80,7 +82,7 @@ int setTypes(ASTREE *node)
 		if(node->symbol->declared == 0)
 			node->symbol->declared = 1;
 		else
-			semanticError(node->line);
+			semanticError(node->line, "FUNCTION Undeclared or Redeclared");
 
 	}
 
@@ -110,7 +112,7 @@ int setTypes(ASTREE *node)
 		if(node->symbol->declared == 0)
 			node->symbol->declared = 1;
 		else
-			semanticError(node->line);
+			semanticError(node->line, "VECTOR Undeclared or Redeclared");
 
 	}
 
@@ -148,9 +150,11 @@ int compareTypesExp(int type1,int type2)
 	if (type1 == 0 || type2 == 0){
 		return -1;
 	}
+
 	//Dois Booleanos
 	if (type1 == HASH_BOOL && type2 == HASH_BOOL)
 		return HASH_BOOL;
+
 	//Pelo menos um float
 	if (type1 == HASH_FLOAT)
 		if (type2 == HASH_FLOAT 
@@ -162,6 +166,7 @@ int compareTypesExp(int type1,int type2)
 			|| type1 == HASH_CHAR
 			|| type1 == HASH_INT)
 			return HASH_FLOAT;
+
 	//Pelo menos um int
 	if (type1 == HASH_INT)
 		if (type2 == HASH_CHAR
@@ -171,6 +176,7 @@ int compareTypesExp(int type1,int type2)
 		if (type1 == HASH_CHAR
 			|| type1 == HASH_INT)
 			return HASH_INT;
+
 	//Dois char
 	if (type1 == HASH_CHAR && type2 == HASH_CHAR)
 		return HASH_CHAR;		
@@ -184,6 +190,7 @@ int findNature (ASTREE *node)
 {
 	if (node->type == ASTREE_VETOR || node->type == ASTREE_CHAMADA_FUNCAO)
 		return HASH_SCALAR;
+
 	if (node->symbol)
 		return node->symbol->nature;
 	else
@@ -196,31 +203,32 @@ int compareNatures(ASTREE *node1,ASTREE *node2)
 	int nature2 = findNature(node2);
 	if(nature1 == nature2)
 		return nature1;
-	semanticError(node1->line);
+	semanticError(node1->line, "");
 }
 
 int checkFuncArguments (ASTREE *node, FUNC_PARAM * parameters)
 {
 	//if function should have no parameter -> error
 	if (parameters == NULL)
-		semanticError(node->line);
+		semanticError(node->line, "No parameters");
+
 	//if argument not scalar -> error
 	if (findNature(node->son[0])!=HASH_SCALAR)
-		semanticError(node->line);
+		semanticError(node->line, "Argument Invalid");
 
 	if (checkExpression (node->son[0]) == parameters->data_type){
 		if (node->son[1])
 		{
 			if (parameters->next == NULL)
-				semanticError(node->line);
+				semanticError(node->line,"Argument Invalid");
 			checkFuncArguments (node->son[1], parameters->next);
 		}
 	}
 	else
-		semanticError(node->line);
+		semanticError(node->line,"");
 	if (parameters->next != NULL)
 		if(node->son[1] == NULL)
-			semanticError(node->line);
+			semanticError(node->line,"Argument Invalid");
 
 
 }
@@ -230,7 +238,7 @@ int checkExpression(ASTREE *node)
 	int expType = 0;
 	if (node->type == ASTREE_SYMBOL){
 		if (node->symbol->data_type == 0)
-			semanticError(node->line);
+			semanticError(node->line,"Datatype Invalid");
 		return node->symbol->data_type;
 	}
 
@@ -238,18 +246,20 @@ int checkExpression(ASTREE *node)
 		return checkExpression(node->son[0]);
 
 	if (node->type == ASTREE_VETOR){
+
 		//Vector has to be a declared vector
 		if(node->symbol->nature != HASH_VECTOR)
-			semanticError(node->line);
+			semanticError(node->line,"Vector not Declared");
+
 		//Vector index has to be int
 		if(checkExpression(node->son[0])!= HASH_INT)
-			semanticError(node->line);
+			semanticError(node->line,"A vector index must be INTEGER");
 		return node->symbol->data_type;
 	}
 
 	if (node->type == ASTREE_CHAMADA_FUNCAO){
 		if (node->symbol->nature != HASH_FUNCTION)
-			semanticError(node->line);
+			semanticError(node->line,"Call FUNCTION");
 		checkFuncArguments(node->son[0],node->symbol->parameters);
 		return node->symbol->data_type;
 	}
@@ -260,11 +270,11 @@ int checkExpression(ASTREE *node)
 	if(node->son[0]->symbol && node->son[1]->symbol){
 		expType = compareTypesExp(node->son[0]->symbol->data_type,node->son[1]->symbol->data_type);
 		if(expType == -1)
-			semanticError(node->line);
+			semanticError(node->line," Wrong Use of !");
 		if(compareNatures(node->son[0],node->son[1]))
 			return expType;
 		else
-			semanticError(node->line);
+			semanticError(node->line,"Operators Invalid");
 	}
 	return(compareTypesExp(checkExpression(node->son[0]),checkExpression(node->son[1])));	
 }
@@ -273,19 +283,20 @@ int checkAttribution(ASTREE *node)
 {
 	//Not string or undefined
 	if (node->symbol->data_type>4||node->symbol->data_type==0)
-		semanticError(node->line);
+		semanticError(node->line,"Incorrect ATTRIBUTION");
 	compareNatures (node, node->son[0]);
+
 	//BOOL with BOOL
 	if (node->symbol->data_type == HASH_BOOL){
 		if (checkExpression(node->son[0])==HASH_BOOL)
 			return HASH_BOOL;
 		else
-			semanticError(node->line);
+			semanticError(node->line,"Incorrect ATTRIBUTION");
 		}
 	//FLOAT INT CHAR
 	if (node->symbol->data_type>=checkExpression(node->son[0]))
 		return node->symbol->data_type;
-	semanticError(node->line);
+	semanticError(node->line,"Incorrect ATTRIBUTION");
 
 }
 
@@ -315,19 +326,19 @@ int checkFORTO(ASTREE *node)
 	controlType = compareTypesExp(checkExpression(node->son[0]),node->symbol->data_type);
 	if(controlType)
 	{
-	if(compareTypesExp(controlType,checkExpression(node->son[1]))==-1)
-		semanticError(node->line);
-	//Command
-	//checkSemantic(node->son[2]);
+		if(compareTypesExp(controlType,checkExpression(node->son[1]))==-1)
+			semanticError(node->line,"Wrong command FOR TO");
+		//Command
+		//checkSemantic(node->son[2]);
 	}
 	else
-		semanticError(node->line);
+		semanticError(node->line,"Wrong command FOR TO");
 }
 
 int checkREAD(ASTREE *node)
 {
 	if (node->symbol->declared == 0)
-		semanticError(node->line);
+		semanticError(node->line,"Wrong command READ");
 }
 
 int checkPrint(ASTREE *node)
@@ -335,7 +346,7 @@ int checkPrint(ASTREE *node)
 	
 	if (node->symbol)
 		if (node->symbol->data_type != HASH_STRING)
-			semanticError(node->line);
+			semanticError(node->line,"Wrong command PRINT");
 	
 	if (node->son[0]){
 		checkSemantic(node->son[0]);
@@ -372,7 +383,7 @@ int checkFunction (ASTREE *node)
 	currFuncType = node->symbol->data_type;
 
 	if (currFuncType == 0 || currFuncType > 4)
-		semanticError(node->line);
+		semanticError(node->line,"DataType Invalid");
 	if (node->son[1])
 		saveParameters(node->son[1],node->symbol);
 	if (node->son[2])
@@ -381,23 +392,24 @@ int checkFunction (ASTREE *node)
 
 int checkReturn (ASTREE *node)
 {
-//	printf("Func Type = %d", currFuncType);
-//	printf("Type = %d", checkExpression(node->son[0]));
+	//printf("Func Type = %d", currFuncType);
+	//printf("Type = %d", checkExpression(node->son[0]));
 	if (currFuncType != checkExpression(node->son[0]))
-		semanticError(node->line);
+		semanticError(node->line,"Wrong command RETURN");
 }
 
 int checkVectorValues (ASTREE *node,int type)
 {
-//	printf("Func Type = %d", type);
-//	printf("Type = %d", node->son[0]->symbol->data_type);
+	//printf("Func Type = %d", type);
+	//printf("Type = %d", node->son[0]->symbol->data_type);
+	
 	int value;
 	value = node->son[0]->symbol->data_type;
 	if (type == HASH_BOOL)
 		if (value!=HASH_BOOL)
-			semanticError(node->line);
+			semanticError(node->line,"Invalid value - expected a BOOL");
 	if (value>type || value>HASH_BOOL || value ==0)
-		semanticError(node->line);
+		semanticError(node->line,"Invalid value - expected a BOOL");
 	if (node->son[1])
 		checkVectorValues (node->son[1],type);
 
@@ -405,9 +417,11 @@ int checkVectorValues (ASTREE *node,int type)
 
 int checkVectorDec (ASTREE *node)
 {
-//	printf("Type = %d", node->son[1]->symbol->data_type);
+	//printf("Type = %d", node->son[1]->symbol->data_type);
+	
 	if (node->son[1]->symbol->data_type!=HASH_INT)
-		semanticError(node->line);
+		semanticError(node->line,"VECTOR wrong Declared");
+
 	if (node->son[2])
 		checkVectorValues(node->son[2],node->symbol->data_type);
 
@@ -416,7 +430,7 @@ int checkVectorDec (ASTREE *node)
 int checkVar (ASTREE *node)
 {
 	if (compareTypesExp(node->symbol->data_type,node->son[1]->symbol->data_type)==-1)
-		semanticError(node->line);
+		semanticError(node->line,"VAR wrong Declared");
 
 }
 
@@ -427,7 +441,7 @@ int checkSemantic(ASTREE *node)
 		switch(node->type)
 		{	
 			case ASTREE_SYMBOL :			checkExpression(node);break;
-			case ASTREE_CMD_ATRIBUICAO : 	checkAttribution(node);break;
+			case ASTREE_CMD_ATRIBUICAO : 		checkAttribution(node);break;
 			case ASTREE_CMD_IF : 			checkIF(node);break;
 			case ASTREE_CMD_IF_ELSE : 		checkIF(node);break;
 			case ASTREE_CMD_FOR : 			checkFOR(node);break;
@@ -436,41 +450,41 @@ int checkSemantic(ASTREE *node)
 			case ASTREE_CMD_PRINT : 		checkPrint(node);break;
 			case ASTREE_CMD_RETURN : 		checkReturn(node);break;
 			case ASTREE_VETOR : 			checkExpression(node);break;
-			case ASTREE_CHAMADA_FUNCAO : 	checkExpression(node);break;
-			case ASTREE_EXP_PARENTESES: 	checkExpression(node);break;
+			case ASTREE_CHAMADA_FUNCAO : 		checkExpression(node);break;
+			case ASTREE_EXP_PARENTESES: 		checkExpression(node);break;
 			case ASTREE_NEGACAO : 			checkExpression(node);break;
-			case ASTREE_ADD : 				checkExpression(node);break;
-			case ASTREE_SUB : 				checkExpression(node);break;
-			case ASTREE_MUL : 				checkExpression(node);break;
-			case ASTREE_DIV : 				checkExpression(node);break;
+			case ASTREE_ADD : 			checkExpression(node);break;
+			case ASTREE_SUB : 			checkExpression(node);break;
+			case ASTREE_MUL : 			checkExpression(node);break;
+			case ASTREE_DIV : 			checkExpression(node);break;
 			case ASTREE_MENOR : 			checkExpression(node);break;
 			case ASTREE_MAIOR : 			checkExpression(node);break;
-			case ASTREE_LE : 				checkExpression(node);break;
-			case ASTREE_GE : 				checkExpression(node);break;
-			case ASTREE_EQ : 				checkExpression(node);break;
-			case ASTREE_NE : 				checkExpression(node);break;
-			case ASTREE_AND : 				checkExpression(node);break;
-			case ASTREE_OR : 				checkExpression(node);break;
+			case ASTREE_LE : 			checkExpression(node);break;
+			case ASTREE_GE : 			checkExpression(node);break;
+			case ASTREE_EQ : 			checkExpression(node);break;
+			case ASTREE_NE : 			checkExpression(node);break;
+			case ASTREE_AND : 			checkExpression(node);break;
+			case ASTREE_OR : 			checkExpression(node);break;
 			case ASTREE_ARGUMENTOS : 		break;	//ja feito
-			case ASTREE_RESTO_ARGUMENTOS : 	break;	//ja feito
-			case ASTREE_LISTA_COMANDOS :	break;	//ja feito
+			case ASTREE_RESTO_ARGUMENTOS : 		break;	//ja feito
+			case ASTREE_LISTA_COMANDOS :		break;	//ja feito
 			case ASTREE_COMANDOS :			break;	//ja feito
-			case ASTREE_LISTA_DECLARACOES :	break;	//ja feito
+			case ASTREE_LISTA_DECLARACOES :		break;	//ja feito
 			case ASTREE_DECLARACOES :		break;	//ja feito
 			case ASTREE_VARIAVEL :			checkVar (node);break;
-			case ASTREE_VETOR_DECLARADO_1 :	checkVectorDec (node);break;
-			case ASTREE_VETOR_DECLARADO_2 :	checkVectorDec (node);break;
-			case ASTREE_INT :				break;	//ja feito
-			case ASTREE_FLOAT :				break;	//ja feito
-			case ASTREE_BOOL :				break;	//ja feito
-			case ASTREE_CHAR :				break;	//ja feito
-			case ASTREE_DECLARACAO_FUNCAO:	checkFunction(node);break;
-			case ASTREE_BLOCO :				break;	//ja feito
+			case ASTREE_VETOR_DECLARADO_1 :		checkVectorDec (node);break;
+			case ASTREE_VETOR_DECLARADO_2 :		checkVectorDec (node);break;
+			case ASTREE_INT :			break;	//ja feito
+			case ASTREE_FLOAT :			break;	//ja feito
+			case ASTREE_BOOL :			break;	//ja feito
+			case ASTREE_CHAR :			break;	//ja feito
+			case ASTREE_DECLARACAO_FUNCAO:		checkFunction(node);break;
+			case ASTREE_BLOCO :			break;	//ja feito
 			case ASTREE_PARAMETROS:			break;	//ja feito
-			case ASTREE_PARAMETROS_RESTO:	break;	//ja feito		
+			case ASTREE_PARAMETROS_RESTO:		break;	//ja feito		
 			case ASTREE_PROGRAMA:			break;	//ja feito
 			case ASTREE_VETOR_CONTEUDO:		break;	//ja feito	
-			default: 						break;			
+			default: 				break;			
 		}
 
 		int i;
