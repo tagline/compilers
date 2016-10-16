@@ -1,5 +1,5 @@
 bool b:TRUE;
-int a:5;
+float a:3;
 int l:3;
 int ricl[4]:2;
 

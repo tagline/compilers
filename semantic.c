@@ -145,7 +145,7 @@ int setTypes(ASTREE *node)
 
 int compareTypesExp(int type1,int type2)
 {
-	if (type1 == 0 && type2 == 0){
+	if (type1 == 0 || type2 == 0){
 		return -1;
 	}
 	//Dois Booleanos
@@ -410,6 +410,13 @@ int checkVectorDec (ASTREE *node)
 
 }
 
+int checkVar (ASTREE *node)
+{
+	if (compareTypesExp(node->symbol->data_type,node->son[1]->symbol->data_type)==-1)
+		semanticError(node->line);
+
+}
+
 int checkSemantic(ASTREE *node)
 {
 	if(node)
@@ -447,7 +454,7 @@ int checkSemantic(ASTREE *node)
 			case ASTREE_COMANDOS :			break;	//ja feito
 			case ASTREE_LISTA_DECLARACOES :	break;	//ja feito
 			case ASTREE_DECLARACOES :		break;	//ja feito
-			case ASTREE_VARIAVEL :			break;	//ja feito
+			case ASTREE_VARIAVEL :			checkVar (node);break;
 			case ASTREE_VETOR_DECLARADO_1 :	checkVectorDec (node);break;
 			case ASTREE_VETOR_DECLARADO_2 :	checkVectorDec (node);break;
 			case ASTREE_INT :				break;	//ja feito
