@@ -1,18 +1,19 @@
 bool b:TRUE;
 int a:5;
 int l:3;
-bool ricl[3]:TRUE TRUE;
+int ricl[4]:2;
 
 int main(int x, bool c)
 {
 x=1+2;
-  x=ricl;
+  x=ricl[2];
 	print x;
 return 3;
 };
 
 int teste()
 {
-	;
+	a= main(a,b);;
 	
 };
+
