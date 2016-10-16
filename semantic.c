@@ -218,6 +218,9 @@ int checkFuncArguments (ASTREE *node, FUNC_PARAM * parameters)
 	}
 	else
 		semanticError(node->line);
+	if (parameters->next != NULL)
+		if(node->son[1] == NULL)
+			semanticError(node->line);
 
 
 }
