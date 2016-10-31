@@ -201,9 +201,11 @@ int compareNatures(ASTREE *node1,ASTREE *node2)
 {
 	int nature1 = findNature(node1);
 	int nature2 = findNature(node2);
+
 	if(nature1 == nature2)
 		return nature1;
-	semanticError(node1->line, "");
+
+	semanticError(node1->line, "Nature is wrong definied");
 }
 
 int checkFuncArguments (ASTREE *node, FUNC_PARAM * parameters)
@@ -283,7 +285,8 @@ int checkAttribution(ASTREE *node)
 {
 	//Not string or undefined
 	if (node->symbol->data_type>4||node->symbol->data_type==0)
-		semanticError(node->line,"Incorrect ATTRIBUTION");
+		semanticError(node->line,"Incorrect attribution");
+
 	compareNatures (node, node->son[0]);
 
 	//BOOL with BOOL
@@ -291,12 +294,14 @@ int checkAttribution(ASTREE *node)
 		if (checkExpression(node->son[0])==HASH_BOOL)
 			return HASH_BOOL;
 		else
-			semanticError(node->line,"Incorrect ATTRIBUTION");
-		}
+			semanticError(node->line,"Incorrect attribution");
+	}
+
 	//FLOAT INT CHAR
 	if (node->symbol->data_type>=checkExpression(node->son[0]))
 		return node->symbol->data_type;
-	semanticError(node->line,"Incorrect ATTRIBUTION");
+
+	semanticError(node->line,"Incorrect attribution");
 
 }
 
@@ -304,8 +309,10 @@ int checkIF(ASTREE *node)
 {
 	//Condition
 	checkExpression(node->son[0]);
+	
 	//Then
 	checkSemantic(node->son[1]);
+
 	//Else
 	if (node->type == ASTREE_CMD_IF_ELSE)
 		checkSemantic(node->son[2]);
@@ -315,6 +322,7 @@ int checkFOR(ASTREE *node)
 {
 	//Control
 	checkExpression(node->son[0]);
+
 	//Command
 	//checkSemantic(node->son[1]);
 }

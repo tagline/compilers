@@ -42,14 +42,7 @@ int main(int argc, char *argv[])
 	}	
 	
 	yyparse();
-
-	ASTREE *root = 0;
-	hashPrint();
-	root = get_ASTREE_root();
-	setTypes(root);
-	
-	astreePrint(root, 0);
-	checkSemantic(root);
+	//hashPrint();
 
 	// se der sucesso, retorna 0 como saída //
 	exit(0);
