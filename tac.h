@@ -2,6 +2,9 @@
 // ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
 //--------------------------------------------//
 
+#ifndef TAC_HEADER
+#define TAC_HEADER
+
 #include <stdio.h>
 #include "hash.h"
 
@@ -9,27 +12,34 @@
 #define TAC_SUB 2
 #define TAC_MUL 3
 #define TAC_DIV 4 
-#define TAC_GREATER 5
-#define TAC_LESS 6
+
+#define TAC_MAIOR 5
+#define TAC_MENOR 6
 #define TAC_LE 7 
 #define TAC_GE 8 
-#define TAC_EQUAL 9	 
-#define TAC_NEQUAL 10 
+#define TAC_EQ 9	 
+#define TAC_NE 10 
 #define TAC_OR 11
 #define TAC_AND 12
-#define TAC_SYMBOL 13
-#define TAC_LABEL 14
-#define TAC_BEGINFUN 15
-#define TAC_ENDFUN 16
-#define TAC_IFZ 17
-#define TAC_JUMP 18
-#define TAC_CALL 19
-#define TAC_ARG 20
-#define TAC_RET 21
-#define TAC_MOVE 22
-#define TAC_PRINT 23
-#define TAC_RETURN 24
-#define TAC_ATRIB 25
+
+#define TAC_LABEL 13
+#define TAC_BEGINFUN 14
+#define TAC_ENDFUN 15
+#define TAC_IFZ 16
+#define TAC_JUMP 17
+#define TAC_CALL 18
+#define TAC_ARG 19
+#define TAC_RET 20
+#define TAC_MOVE 21
+#define TAC_PRINT 22
+#define TAC_RETURN 23
+#define TAC_ATRIBUICAO 24
+#define TAC_SYMBOL 25
+
+#define TAC_INT 26
+#define TAC_FLOAT 27
+#define TAC_CHAR 28
+#define TAC_BOOL 29
 
 typedef struct tac
 {
@@ -42,10 +52,12 @@ typedef struct tac
 } TAC;
 
 
-TAC* tacCreate(int type, HASH_NODE *res, HASH_NODE *op1, HASH_NODE *op2);
-TAC* tacJoin(TAC* l1,TAC* l2);
-void tacPrintSingle(TAC *node);
-void tacPrintList(TAC *node);
-TAC* generateCode(TAC *node);
-TAC *tacReverse(TAC *tac);
+TAC * tacCreate(int type, HASH_NODE *res, HASH_NODE *op1, HASH_NODE *op2);
+TAC * tacJoin(TAC *l1,TAC *l2);
+void tacPrintSingle(TAC *tac);
+void tacPrintList(TAC *tac);
+//TAC* tacReverse(TAC *tac);
+
+
+#endif
 

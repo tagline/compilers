@@ -2,6 +2,9 @@
 // ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
 //--------------------------------------------//
 
+#ifndef ASTREE_HEADER
+#define ASTREE_HEADER
+
 #include "hash.h"
 
 #define MAX_SONS 4 
@@ -74,4 +77,7 @@ typedef struct astree_node
 ASTREE *astreeCreate(int type, HASH_NODE *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3,int line);
 void astreePrint(ASTREE *node, int level);
 void astreeDecompile(ASTREE *astree, int node_father);
+
+#endif
+
 

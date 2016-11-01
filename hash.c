@@ -127,3 +127,22 @@ void hashPrint(void)
 
 }
 
+HASH_NODE* makeTemp(void)
+{
+	static char buffer[256];
+	static int nextTemp=0;
+	sprintf(buffer,"My_Temp__ %d",nextTemp++);
+	return hashInsert(HASH_SCALAR, buffer);
+}
+
+HASH_NODE* makeLabel(void)
+{
+	static char buffer[256];
+	static int nextTemp=0;
+	sprintf(buffer,"My_Label__ %d",nextTemp++);
+	return hashInsert(HASH_SCALAR, buffer); //HASH_LABEL
+}
+
+
+
+

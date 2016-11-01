@@ -2,6 +2,9 @@
 // ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
 //--------------------------------------------//
 
+#ifndef HASH_HEADER
+#define HASH_HEADER
+
 # define HASH_SIZE 	997
 # define HASH_INT 	2 
 # define HASH_FLOAT 	3 
@@ -36,4 +39,8 @@ int hashAddress(char *text);
 HASH_NODE* hashInsert(int type, char* text);
 HASH_NODE* hashFind(char *text);
 void hashPrint(void);
+HASH_NODE* makeTemp(void);
+HASH_NODE* makeLabel(void);
+
+#endif
 

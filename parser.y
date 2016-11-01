@@ -7,7 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "astree.c"
-#include "tac.c"
+
+#include "tac.h"
+#include "code.h"
 
 #define   SYMBOL_UNDEFINED		0 
 #define   SYMBOL_TK_IDENTIFIER  	1 
@@ -100,7 +102,7 @@ programa : lista_declaracoes						{ root = astreeCreate(ASTREE_PROGRAMA, 0, $1, 
 									  setTypes(root);
 									  astreePrint(root, 0);
 									  checkSemantic(root);
-									  //tacPrintList(generateCode(root));
+									  tacPrintList(generateCode(root)); 
 
 									}
 	 ;
