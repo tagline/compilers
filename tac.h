@@ -28,11 +28,11 @@
 #define TAC_IFZ 16
 #define TAC_JUMP 17
 #define TAC_CALL 18
-#define TAC_ARG 19
-#define TAC_RET 20
-#define TAC_MOVE 21
-#define TAC_PRINT 22
-#define TAC_RETURN 23
+#define TAC_MOVE 19
+#define TAC_MOVE_IND 20
+#define TAC_PRINT 21
+#define TAC_RETURN 22
+#define TAC_READ 23
 #define TAC_ATRIBUICAO 24
 #define TAC_SYMBOL 25
 
@@ -40,6 +40,12 @@
 #define TAC_FLOAT 27
 #define TAC_CHAR 28
 #define TAC_BOOL 29
+
+#define TAC_PARAMETRO 30
+#define TAC_DECL_VECTOR 31
+#define TAC_DECL_VARIAVEL 32
+#define TAC_ARGUMENTOS 33
+
 
 typedef struct tac
 {

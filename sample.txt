@@ -26,6 +26,11 @@ int main()
     i = i + 1;
     };
   print "Incrementado algumas vezes fica " a "\n";
+
+   if(i==1) then 
+	print "i eh igual a 1"; 
+//   else print "i nao eh 1";;
+
   if (a==5) then 
     print "Parou no meio\n";
   if (a==11) then

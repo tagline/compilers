@@ -6,14 +6,15 @@
 #define HASH_HEADER
 
 # define HASH_SIZE 	997
-# define HASH_INT 	2 
-# define HASH_FLOAT 	3 
-# define HASH_BOOL 	4 
-# define HASH_CHAR 	1 
-# define HASH_STRING 5
-# define HASH_SCALAR 11
-# define HASH_VECTOR 12
-# define HASH_FUNCTION 13
+# define HASH_INT 	1 
+# define HASH_FLOAT 	2 
+# define HASH_BOOL 	3 
+# define HASH_CHAR 	4 
+# define HASH_STRING    5
+# define HASH_SCALAR    6
+# define HASH_VECTOR    7
+# define HASH_FUNCTION  8
+# define HASH_LABEL	9
 
 typedef struct func_param
 {
