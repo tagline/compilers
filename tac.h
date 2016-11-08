@@ -23,8 +23,8 @@
 #define TAC_AND 12
 
 #define TAC_LABEL 13
-#define TAC_BEGINFUN 14
-#define TAC_ENDFUN 15
+#define TAC_BEGIN_FUN 14
+#define TAC_END_FUN 15
 #define TAC_IFZ 16
 #define TAC_JUMP 17
 #define TAC_CALL 18
@@ -38,12 +38,12 @@
 
 #define TAC_INT 26
 #define TAC_FLOAT 27
-#define TAC_CHAR 28
-#define TAC_BOOL 29
+#define TAC_BOOL 28
+#define TAC_CHAR 29
 
 #define TAC_PARAMETRO 30
-#define TAC_DECL_VECTOR 31
-#define TAC_DECL_VARIAVEL 32
+#define TAC_DECLAR_VECTOR 31
+#define TAC_DECLAR_VARIAVEL 32
 #define TAC_ARGUMENTOS 33
 
 

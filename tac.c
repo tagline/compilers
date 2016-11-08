@@ -59,8 +59,8 @@ void tacPrintSingle(TAC *tac)
 
 		case TAC_SYMBOL : 	fprintf(stderr, "(TAC_SYMBOL"); break;
 		case TAC_LABEL :	fprintf(stderr, "(TAC_LABEL"); break;
-		case TAC_BEGINFUN :	fprintf(stderr, "(TAC_BEGINFUN"); break;
-		case TAC_ENDFUN :	fprintf(stderr, "(TAC_ENDFUN"); break;		
+		case TAC_BEGIN_FUN :	fprintf(stderr, "(TAC_BEGIN_FUN"); break;
+		case TAC_END_FUN :	fprintf(stderr, "(TAC_END_FUN"); break;		
 		case TAC_IFZ : 		fprintf(stderr, "(TAC_IFZ"); break;
 		case TAC_JUMP : 	fprintf(stderr, "(TAC_JUMP"); break;
 		case TAC_CALL : 	fprintf(stderr, "(TAC_CALL"); break;
@@ -70,11 +70,10 @@ void tacPrintSingle(TAC *tac)
 	        case TAC_RETURN : 	fprintf(stderr, "(TAC_RETURN"); break;
 	        
 		case TAC_ATRIBUICAO: 	fprintf(stderr, "(TAC_ATRIBUICAO");break;
-		case TAC_PARAMETRO: 	fprintf(stderr, "(TAC_PARAMETRO");break;
-		case TAC_DECL_VECTOR: 	fprintf(stderr, "(TAC_DECL_VECTOR");break;			
-		case TAC_DECL_VARIAVEL: fprintf(stderr, "(TAC_DECL_VARIAVEL"); break;
+		case TAC_PARAMETRO: 	fprintf(stderr, "(TAC_PARAMETRO");break;	
+		case TAC_DECLAR_VECTOR:	fprintf(stderr, "(TAC_DECLAR_VECTOR");break;			
+		case TAC_DECLAR_VARIAVEL: fprintf(stderr, "(TAC_DECLAR_VARIAVEL"); break;
 		case TAC_ARGUMENTOS: 	fprintf(stderr, "(TAC_ARGUMENTOS"); break;
-
 
 		default: 		fprintf(stderr,"(UNKNOWN %d", tac->type); break;
 	}

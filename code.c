@@ -38,16 +38,22 @@ TAC *generateCode(ASTREE *node)
 		case ASTREE_BOOL: 	return tacCreate(TAC_BOOL, 0, 0, 0); break;
 		case ASTREE_CHAR: 	return tacCreate(TAC_CHAR, 0, 0, 0); break;
 		
-		case ASTREE_CMD_IF: 		return makeIf(code); break;
-		case ASTREE_CMD_IF_ELSE:	return makeIfThen(code); break;
-		case ASTREE_CMD_RETURN:		return tacJoin(code[0], tacCreate(TAC_RETURN, code[0]?code[0]->res:0,0,0)); break;
-		case ASTREE_CMD_READ: 		return tacJoin(code[0], tacCreate(TAC_READ, code[0]?code[0]->res:0,0,0)); break;
-		//case ASTREE_DECLARACAO_FUNCAO:  return makeFuncDecl(node->symbol,code); break;
-		case ASTREE_CMD_ATRIBUICAO: 	return tacJoin(code[0], tacCreate(TAC_MOVE,node->symbol,code[0]?code[0]->res:0,0)); break;
+		case ASTREE_CMD_IF: 		  return makeIf(code); break;
+		case ASTREE_CMD_IF_ELSE:	  return makeIfThen(code); break;
+		case ASTREE_CMD_RETURN:		  return tacJoin(code[0], tacCreate(TAC_RETURN,code[0]?code[0]->res:0,0,0)); break;
+		case ASTREE_CMD_READ: 		  return tacJoin(code[0], tacCreate(TAC_READ,code[0]?code[0]->res:0,0,0)); break;
+		case ASTREE_CMD_PRINT:  	  return tacJoin(code[0], tacCreate(TAC_PRINT,code[0]?code[0]->res:0,code[1]?code[1]->res:0,0)); break;
+		case ASTREE_CMD_ATRIBUICAO: 	  return tacJoin(code[0], tacCreate(TAC_MOVE,node->symbol,code[0]?code[0]->res:0,0)); break;
 		case ASTREE_CMD_ATRIBUICAO_VETOR: return makeAtribVector(node->symbol,code); break; 
 		case ASTREE_PARAMETROS: 	return tacJoin(code[0], tacCreate(TAC_PARAMETRO,node->symbol,code[0]?code[0]->res:0,0)); break;
+		//case ASTREE_DECLARACAO_FUNCAO:    return makeFuncDecl(node->symbol,code); break;
+		case ASTREE_VARIAVEL:    	  return tacCreate(TAC_DECLAR_VARIAVEL, node->symbol, 0, 0);
+		case ASTREE_VETOR_DECLARADO_1:    return tacCreate(TAC_DECLAR_VECTOR, node->symbol, code[1]?code[1]->res:0, 0);
+		case ASTREE_VETOR_DECLARADO_2:	  return tacCreate(TAC_DECLAR_VECTOR, node->symbol, code[1]?code[1]->res:0, 0);
+		case ASTREE_CHAMADA_FUNCAO:	  return tacJoin(code[0], tacCreate(TAC_CALL, makeTemp(), node->symbol, 0)); break;
 		//case ASTREE_CMD_FOR: 		return makeFor(code); break;		
 		
+		case ASTREE_PROGRAMA:   return tacJoin(code[0], code[1]);break;
 		case ASTREE_BLOCO: 	return code[0]; break;		
 		case ASTREE_VAZIO: 	break;
 	}
@@ -95,10 +101,10 @@ TAC* makeIfThen(TAC** code) { //revisar
 
 TAC* makeFuncDecl(HASH_NODE* symbol, TAC** code) {
 	
-	TAC* beginfunc = tacCreate(TAC_BEGINFUN, symbol, 0, 0);
-	TAC* endfunc   = tacCreate(TAC_ENDFUN, symbol, 0, 0);
+	TAC* beginFunc = tacCreate(TAC_BEGIN_FUN, symbol, 0, 0);
+	TAC* endFunc   = tacCreate(TAC_END_FUN, symbol, 0, 0);
 
-	return tacJoin(tacJoin(tacJoin(code[0], beginfunc), code[1]), endfunc);
+	return tacJoin(tacJoin(tacJoin(code[0], beginFunc), code[1]), endFunc);
 
 }
 

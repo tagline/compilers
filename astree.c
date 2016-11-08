@@ -105,7 +105,6 @@ void astreePrint(ASTREE *node, int level)
 		for(i=0; i<MAX_SONS; i++)
 			astreePrint(node->son[i],level+1);		
 	
-	
 	}
 
 }
