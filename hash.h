@@ -2,6 +2,8 @@
 // ALUNOS: TAGLINE TREICHEL e BRUNO FILLMANN
 //--------------------------------------------//
 
+#include <stdio.h>
+
 #ifndef HASH_HEADER
 #define HASH_HEADER
 
@@ -42,6 +44,7 @@ HASH_NODE* hashFind(char *text);
 void hashPrint(void);
 HASH_NODE* makeTemp(void);
 HASH_NODE* makeLabel(void);
+void saveASM(FILE *fout);
 
 #endif
 

@@ -1,5 +1,5 @@
-etapa5: y.tab.o lex.yy.o main.o hash.o astree.o semantic.o tac.o code.o
-	gcc -o etapa5 hash.o lex.yy.o y.tab.o main.o semantic.o tac.o code.o
+etapa6: y.tab.o lex.yy.o main.o hash.o astree.o semantic.o tac.o code.o
+	gcc -o etapa6 hash.o lex.yy.o y.tab.o main.o semantic.o tac.o code.o
 
 main.o: main.c
 	gcc -c main.c 
@@ -32,4 +32,4 @@ code.o: code.c
 	gcc -c code.c
 	 
 clean:
-	rm *.o etapa5 lex.yy.c lex.yy.h y.tab.c y.tab.h
+	rm *.o etapa6 lex.yy.c lex.yy.h y.tab.c y.tab.h

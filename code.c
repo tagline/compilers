@@ -46,7 +46,7 @@ TAC *generateCode(ASTREE *node)
 		case ASTREE_CMD_ATRIBUICAO: 	  return tacJoin(code[0], tacCreate(TAC_MOVE,node->symbol,code[0]?code[0]->res:0,0)); break;
 		case ASTREE_CMD_ATRIBUICAO_VETOR: return makeAtribVector(node->symbol,code); break; 
 		case ASTREE_PARAMETROS: 	return tacJoin(code[0], tacCreate(TAC_PARAMETRO,node->symbol,code[0]?code[0]->res:0,0)); break;
-		//case ASTREE_DECLARACAO_FUNCAO:    return makeFuncDecl(node->symbol,code); break;
+		case ASTREE_DECLARACAO_FUNCAO:    return makeFuncDecl(node->symbol,code); break;
 		case ASTREE_VARIAVEL:    	  return tacCreate(TAC_DECLAR_VARIAVEL, node->symbol, 0, 0);
 		case ASTREE_VETOR_DECLARADO_1:    return tacCreate(TAC_DECLAR_VECTOR, node->symbol, code[1]?code[1]->res:0, 0);
 		case ASTREE_VETOR_DECLARADO_2:	  return tacCreate(TAC_DECLAR_VECTOR, node->symbol, code[1]?code[1]->res:0, 0);
@@ -86,7 +86,7 @@ TAC* makeIf(TAC** code) {
 	return tacJoin(tacJoin(tacJoin(code[0],t1),code[1]),t2);
 }
 
-TAC* makeIfThen(TAC** code) { //revisar
+TAC* makeIfThen(TAC** code) { 
 	TAC* t1;
 	TAC* t2;
 	HASH_NODE *newLabel;
@@ -104,7 +104,7 @@ TAC* makeFuncDecl(HASH_NODE* symbol, TAC** code) {
 	TAC* beginFunc = tacCreate(TAC_BEGIN_FUN, symbol, 0, 0);
 	TAC* endFunc   = tacCreate(TAC_END_FUN, symbol, 0, 0);
 
-	return tacJoin(tacJoin(tacJoin(code[0], beginFunc), code[1]), endFunc);
+	return tacJoin(tacJoin(tacJoin(code[1], beginFunc), code[0]), endFunc);
 
 }
 
@@ -119,3 +119,25 @@ TAC* makeFor(TAC** node) {
 	
 }
 */
+
+
+// ASM OUTPUT
+void tac2asm (TAC*node, FILE *fout) 
+{
+
+	TAC* tac;
+	for(tac = node; tac; tac = tac->next)
+	switch(tac->type)
+	{
+		// dentro de cada uma desses cases imprimir o que o compilador gera de código (gerar um assembly depois ver o que o compilador gera de codigo)
+		//case TAC_BEGIN_FUN : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_END_FUN : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_ADD : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_SUB : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_MUL : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_DIV : fprintf(fout, "\t.globl _%s\n"); break;
+					
+	}
+
+
+}

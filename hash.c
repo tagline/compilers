@@ -143,6 +143,28 @@ HASH_NODE* makeLabel(void)
 	return hashInsert(HASH_LABEL, buffer); 
 }
 
+void saveASM(FILE *fout) 
+{
+	int i=0;
+	HASH_NODE * node;
+
+	fprintf(fout, "\t.data\n");
+
+	for(i=0;i<HASH_SIZE;i++)
+		for(node=Table[i]; node; node=node->next)
+			if(node->type != HASH_FUNCTION && node->type != HASH_LABEL)
+			{	
+			if(node->type == HASH_SCALAR || node->type == HASH_VECTOR)
+				fprintf(fout, "_%s:\t.long 0\n", node->text);
+			else
+				fprintf(fout, "_%s:\t.long %s\n", node->text, node->text);					
+			}
+
+	fprintf(fout, "\t.cstring\n"
+	"LC0:.ascii \"%%d\\0\n "
+	"\t.text\n");
+	
+}
 
 
 
