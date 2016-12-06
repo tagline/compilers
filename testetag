@@ -6,31 +6,18 @@ int i:0;
 float v[10]: 0 0 0 0 0 0 0 0 0 0; 
 int v2[5]: 0 0 0 0 0; 
 bool mat[1000];
-char c: 'x';
+int c: 5;
 int retorno:0; 
 
-int c: 0;
+//int c: 0;
 
 int func(float z)  { return 1; };
 
 int incn (int x, int n)
 {
 
-	v[a + c] = a;
 	a = a + a;
-	a = c;
-	c = 'a';
-		
 
-	//c = a; > tem que aceitar, pois char e int aqui são a "intercambiáveis" , ambos são 1 byte
-	
-	i = v2[1]; // int	
-	b = v[1]; // float
-
-	retorno = func(v[1]);
-
-	//tem q gerar erro
-	a = a + (1 > 9);
 };
 
 

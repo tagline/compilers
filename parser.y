@@ -104,7 +104,7 @@ programa : lista_declaracoes						{ root = astreeCreate(ASTREE_PROGRAMA, 0, $1, 
 									  checkSemantic(root);
 									  fprintf(stderr,"\n\n");
 									  tacPrintList(generateCode(root));
-									  //tac2asm(root, fopen("output.s","w")) 
+									  tac2asm(generateCode(root), fopen("output.s","w"));
 
 									}
 	 ;

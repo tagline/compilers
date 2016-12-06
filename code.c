@@ -124,20 +124,57 @@ TAC* makeFor(TAC** node) {
 // ASM OUTPUT
 void tac2asm (TAC*node, FILE *fout) 
 {
-
+	//printf("oi: %s",node->type);
 	TAC* tac;
-	for(tac = node; tac; tac = tac->next)
+	for(tac = node; tac; tac = tac->prev)
+	{
+		printf("oi: %d",tac->type);
+	
 	switch(tac->type)
 	{
+
 		// dentro de cada uma desses cases imprimir o que o compilador gera de código (gerar um assembly depois ver o que o compilador gera de codigo)
 		//case TAC_BEGIN_FUN : fprintf(fout, "\t.globl _%s\n"); break;
 		//case TAC_END_FUN : fprintf(fout, "\t.globl _%s\n"); break;
-		//case TAC_ADD : fprintf(fout, "\t.globl _%s\n"); break;
+		case TAC_ADD : fprintf(fout, "\taddl\t%s, %s\n",node->res); break;
 		//case TAC_SUB : fprintf(fout, "\t.globl _%s\n"); break;
 		//case TAC_MUL : fprintf(fout, "\t.globl _%s\n"); break;
 		//case TAC_DIV : fprintf(fout, "\t.globl _%s\n"); break;
-					
-	}
+		//case TAC_MAIOR : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_MENOR : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_LE : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_GE : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_EQ : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_NE : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_OR : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_AND : fprintf(fout, "\t.globl _%s\n"); break;
 
+		//case TAC_LABEL : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_BEGIN_FUN : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_END_FUN : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_IFZ : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_JUMP : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_CALL : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_MOVE : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_MOVE_IND : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_PRINT : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_RETURN : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_READ : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_ATRIBUICAO : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_SYMBOL : fprintf(fout, "\t.globl _%s\n"); break;
 
+		//case TAC_INT : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_FLOAT : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_BOOL : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_CHAR : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_PARAMETRO : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_DECLAR_VECTOR : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_DECLAR_VARIAVEL : fprintf(fout, "\t.globl _%s\n"); break;
+		//case TAC_ARGUMENTOS : fprintf(fout, "\t.globl _%s\n"); break;
+
+		//case TAC_HEADER : fprintf(fout, "\t.globl _%s\n"); break;
+		default: continue;
+	}}
 }
+
+	

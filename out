@@ -1,19 +1,25 @@
-bool b:TRUE;
-float a:3;
-int l:3;
-int ricl[4]: 2;
-int main (int x,bool c)
+int o:0;
+int a:0;
+int i:0;
+float v[10]: 0000000000;
+int v2[5]: 00000;
+bool mat[1000] ;
+int c:5;
+int retorno:0;
+int func (float z)
 {
-x=1 + 2;
-x=ricl[3];
-print x;
-return 5;
+return 1;
 
 }
 ;
-int teste ()
+int incn (int x,int n)
 {
-l=main(l);
+a=a + a;
+
+}
+;
+int voidfunc ()
+{
 ;
 
 }
